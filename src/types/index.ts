@@ -13,6 +13,9 @@ export interface User {
   bio?: string;
   skills?: string[];
   joinedAt: string;
+  designation?: string;
+  interests?: string;
+  currentProject?: string;
 }
 
 // ─── Project ─────────────────────────────────────────────────────────────────
@@ -50,6 +53,9 @@ export interface Project {
   createdAt: string;
   updatedAt: string;
   thumbnail?: string;
+  problemStatement?: string;
+  proposedSolution?: string;
+  isDemoContent?: boolean;
   githubUrl?: string;
   demoUrl?: string;
   isOpenForApplications: boolean;
@@ -169,6 +175,7 @@ export interface Event {
   maxCapacity?: number;
   tags: string[];
   coverImage?: string;
+  isIllustrative?: boolean;
   registrationDeadline?: string;
 }
 

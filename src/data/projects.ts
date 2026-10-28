@@ -3,107 +3,141 @@ import type { Project } from '../types';
 export const mockProjects: Project[] = [
   {
     id: 'p1',
-    title: 'Campus Smart Attendance System',
+    title: 'Campus Connect',
     description:
-      'An IoT-based attendance system using facial recognition and RFID to automate classroom attendance tracking.',
+      'A unified digital hub connecting students across faculties to discover peer projects, technical study circles, and campus hackathons.',
     longDescription:
-      'A comprehensive attendance management solution combining facial recognition AI with RFID card scanning. The system integrates with the college ERP, sends real-time alerts to parents for absentees, and generates detailed analytics for faculty.',
-    category: 'IoT',
+      'Campus Connect provides a central collaborative platform for MIT-ADT University students. It bridges communication gaps across different engineering and design departments, streamlining project discovery, peer-to-peer mentoring, and team formation for innovation competitions.',
+    problemStatement:
+      'Students across different schools (Engineering, Design, Film) struggle to discover interdisciplinary teammates and campus initiatives.',
+    proposedSolution:
+      'An intuitive cross-department collaborative portal featuring automated skill-matching, project boards, and faculty review integration.',
+    category: 'Web Development',
     status: 'in_progress',
-    tags: ['IoT', 'Computer Vision', 'RFID', 'Python', 'React'],
-    leadId: 'u1',
-    mentorId: 'u4',
+    tags: ['React', 'TypeScript', 'Tailwind CSS', 'Node.js', 'Collaboration'],
+    leadId: 'u1', // Akshat Jain
+    mentorId: 'u4', // Dr. Rahul Satyakam
     memberIds: ['u1', 'u2', 'u7'],
     createdAt: '2025-09-01',
     updatedAt: '2026-10-10',
     isOpenForApplications: true,
-    applicationCount: 5,
+    applicationCount: 6,
     incubationReferred: false,
-    githubUrl: 'https://github.com/example/smart-attendance',
+    thumbnail: '/images/projects/project_campus_connect.jpg',
+    isDemoContent: true,
+    githubUrl: 'https://github.com/mitadt-itclub/campus-connect',
   },
   {
     id: 'p2',
-    title: 'AI Study Buddy',
+    title: 'Smart Campus Assistant',
     description:
-      'A personalized learning assistant that adapts to individual learning styles and provides targeted practice questions.',
+      'An intelligent campus conversational assistant helping students navigate academic resources, lab schedules, and club activities.',
     longDescription:
-      'Leveraging LLMs to create a conversational study partner. Students can ask questions, get explanations, take adaptive quizzes, and track their progress over time. Integrates with the college course syllabus.',
+      'A student-built AI assistant powered by natural language processing and retrieval-augmented generation. It provides immediate answers to questions about computer lab availability, library hours, upcoming technical workshops, and club project applications.',
+    problemStatement:
+      'Finding real-time answers about campus resources, lab access, and technical schedules is often fragmented across multiple notice boards.',
+    proposedSolution:
+      'A responsive conversational AI assistant trained on university verified student guidelines, calendar schedules, and club FAQs.',
     category: 'AI / ML',
     status: 'review',
-    tags: ['AI', 'LLM', 'Education', 'React', 'FastAPI'],
-    leadId: 'u3',
-    mentorId: 'u4',
+    tags: ['AI / ML', 'Python', 'FastAPI', 'PyTorch', 'Vector DB'],
+    leadId: 'u3', // Roshan Bagale
+    mentorId: 'u4', // Dr. Rahul Satyakam
     memberIds: ['u3', 'u1'],
     createdAt: '2025-07-15',
     updatedAt: '2026-10-15',
     isOpenForApplications: false,
-    applicationCount: 12,
+    applicationCount: 14,
     incubationReferred: true,
-    demoUrl: 'https://ai-buddy.demo.example.com',
-    githubUrl: 'https://github.com/example/ai-study-buddy',
+    thumbnail: '/images/projects/project_smart_assistant.jpg',
+    isDemoContent: true,
+    demoUrl: 'https://smart-campus.demo.example.com',
+    githubUrl: 'https://github.com/mitadt-itclub/smart-campus-assistant',
   },
   {
     id: 'p3',
-    title: 'CampusConnect App',
+    title: 'CyberShield Learning Lab',
     description:
-      'A mobile-first platform for students to find clubs, events, study groups, and connect with peers.',
+      'An interactive ethical hacking and cybersecurity laboratory providing sandbox challenges and defense exercises for students.',
     longDescription:
-      'A React Native app solving the fragmentation problem in campus communication. Features club discovery, event registration, real-time group chats, and a peer-to-peer skill exchange marketplace.',
-    category: 'Mobile App',
+      'A hands-on cybersecurity simulation platform designed by students for practical defense training. Features structured labs covering web application security, network forensics, secure coding standards, and vulnerability assessment.',
+    problemStatement:
+      'Students need practical, secure sandboxes to practice real-world defensive cybersecurity techniques beyond textbook concepts.',
+    proposedSolution:
+      'Containerized learning environments with real-time feedback, capture-the-flag scenarios, and guided defense walkthroughs.',
+    category: 'Cybersecurity',
     status: 'in_progress',
-    tags: ['React Native', 'Firebase', 'Mobile', 'Community'],
-    leadId: 'u7',
-    mentorId: 'u5',
-    memberIds: ['u7', 'u8', 'u2'],
+    tags: ['Cybersecurity', 'Docker', 'Linux', 'Network Security', 'TypeScript'],
+    leadId: 'u1', // Akshat Jain
+    mentorId: 'u5', // Prof. Harshit Kumar
+    memberIds: ['u1', 'u3'],
     createdAt: '2025-10-01',
     updatedAt: '2026-10-18',
     isOpenForApplications: true,
-    applicationCount: 8,
+    applicationCount: 9,
     incubationReferred: false,
+    thumbnail: '/images/projects/project_cybershield.jpg',
+    isDemoContent: true,
   },
   {
     id: 'p4',
-    title: 'SecureVault — Password Manager',
+    title: 'Student Research Explorer',
     description:
-      'An end-to-end encrypted password manager with zero-knowledge architecture built as an open-source project.',
-    category: 'Cybersecurity',
+      'A knowledge discovery platform curating undergraduate research publications, datasets, and faculty-guided technical papers.',
+    longDescription:
+      'Designed to foster an early culture of research at MIT-ADT University. The platform catalogs student research papers, ongoing faculty projects, open research questions, and collaborative paper writing opportunities.',
+    problemStatement:
+      'Undergraduate research efforts often go unnoticed without a central repository to highlight publications and student findings.',
+    proposedSolution:
+      'A searchable publication showcase with citation analytics, faculty endorsement tags, and peer research collaboration tools.',
+    category: 'Data Science',
     status: 'completed',
-    tags: ['Cybersecurity', 'Encryption', 'Open Source', 'Rust', 'WebAssembly'],
-    leadId: 'u3',
-    memberIds: ['u3'],
+    tags: ['Research', 'Python', 'Information Retrieval', 'React', 'Data Science'],
+    leadId: 'u2', // Prachi Kumari
+    mentorId: 'u8', // Prof. Dharmendra Singh
+    memberIds: ['u2', 'u7'],
     createdAt: '2024-11-01',
     updatedAt: '2025-06-20',
     isOpenForApplications: false,
-    applicationCount: 3,
+    applicationCount: 5,
     incubationReferred: false,
-    githubUrl: 'https://github.com/example/securevault',
-    demoUrl: 'https://securevault.demo.example.com',
+    thumbnail: '/images/projects/project_research_explorer.jpg',
+    isDemoContent: true,
+    demoUrl: 'https://research-explorer.demo.example.com',
   },
   {
     id: 'p5',
-    title: 'AgriSense — Precision Farming IoT',
+    title: 'Green Campus Initiative',
     description:
-      'Low-cost sensor networks for small farmers to monitor soil health, moisture, and weather patterns in real-time.',
+      'An IoT sensor network and environmental analytics dashboard tracking energy usage and ambient metrics across Rajbaug campus.',
+    longDescription:
+      'Combining environmental IoT sensors with modern data visualization to monitor campus energy conservation, indoor air quality, and outdoor ambient temperature throughout the 125-acre Rajbaug campus.',
+    problemStatement:
+      'Understanding real-time resource consumption and environmental data across a sprawling campus requires modern telemetry.',
+    proposedSolution:
+      'Low-power sensor nodes linked to a central analytics dashboard that provides actionable conservation insights for the university.',
     category: 'IoT',
     status: 'incubated',
-    tags: ['IoT', 'Agriculture', 'LoRa', 'Data Science', 'Embedded'],
-    leadId: 'u8',
-    mentorId: 'u5',
-    memberIds: ['u8', 'u2'],
+    tags: ['IoT', 'Sustainability', 'Green Computing', 'MQTT', 'Analytics'],
+    leadId: 'u7', // Ziya Shaikh
+    mentorId: 'u8', // Prof. Dharmendra Singh
+    memberIds: ['u7', 'u2'],
     createdAt: '2024-06-01',
     updatedAt: '2026-09-30',
     isOpenForApplications: false,
-    applicationCount: 15,
+    applicationCount: 16,
     incubationReferred: true,
+    thumbnail: '/images/projects/project_green_campus.jpg',
+    isDemoContent: true,
   },
   {
     id: 'p6',
-    title: 'OpenLMS — Learning Management System',
+    title: 'OpenLMS — Adaptive Learning Engine',
     description:
-      'A free, open-source LMS tailored for Indian colleges with offline-first support and regional language UI.',
+      'A modern student-first learning companion with interactive quizzes, revision schedules, and offline-first mobile support.',
     category: 'Web Development',
     status: 'idea',
-    tags: ['LMS', 'Education', 'Open Source', 'PWA', 'Offline'],
+    tags: ['PWA', 'Education', 'Offline First', 'TypeScript'],
     leadId: 'u1',
     memberIds: ['u1'],
     createdAt: '2026-10-05',
@@ -111,6 +145,7 @@ export const mockProjects: Project[] = [
     isOpenForApplications: true,
     applicationCount: 0,
     incubationReferred: false,
+    isDemoContent: true,
   },
 ];
 

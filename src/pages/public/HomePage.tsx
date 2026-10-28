@@ -1,240 +1,1105 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Code2, Lightbulb, Users, Trophy, Zap, BookOpen, Calendar, Rocket } from 'lucide-react';
+import {
+  ArrowRight,
+  Code2,
+  Lightbulb,
+  Users,
+  Trophy,
+  BookOpen,
+  Rocket,
+  CheckCircle2,
+  ChevronDown,
+  Sparkles,
+  GraduationCap,
+  Shield,
+  FolderKanban,
+  Target,
+  ArrowUpRight,
+  UserCheck,
+  Building2,
+  Info
+} from 'lucide-react';
 import { PublicLayout } from '../../layouts/PublicLayout';
 import { PrimaryButton, SecondaryButton } from '../../components/ui/Button';
-import { ProjectCard } from '../../components/ui/ProjectCard';
 import { EventCard } from '../../components/ui/EventCard';
-import { ArticleCard } from '../../components/ui/ArticleCard';
 import { mockProjects } from '../../data/projects';
-import { mockEvents, mockBlogPosts } from '../../data/mock';
-import { useDemoRole } from '../../hooks/useAppContext';
-
-const stats = [
-  { label: 'Active Projects', value: '48', icon: <Code2 size={22} /> },
-  { label: 'Club Members', value: '320+', icon: <Users size={22} /> },
-  { label: 'Events this Year', value: '24', icon: <Calendar size={22} /> },
-  { label: 'Ideas Submitted', value: '120+', icon: <Lightbulb size={22} /> },
-];
-
-const features = [
-  {
-    icon: <FolderIcon />,
-    title: 'Build Real Projects',
-    description:
-      'Team up with peers, get faculty mentorship, and build projects that solve real problems. The best ones get referred to Crieya Incubation.',
-    color: '#3678B7',
-  },
-  {
-    icon: <Lightbulb size={22} />,
-    title: 'Submit & Vote on Ideas',
-    description:
-      'Have a brilliant idea? Share it. Browse and upvote ideas from your peers. Approved ideas get fast-tracked into official projects.',
-    color: '#F59E0B',
-  },
-  {
-    icon: <BookOpen size={22} />,
-    title: 'Learn & Grow',
-    description:
-      'Take curated quizzes, read articles written by seniors, and track your skills. Build a portfolio that impresses recruiters.',
-    color: '#22C55E',
-  },
-  {
-    icon: <Calendar size={22} />,
-    title: 'Attend Events',
-    description:
-      "From hackathons to industry talks, workshops, and open-source sprints — there's always something happening at the club.",
-    color: '#8B5CF6',
-  },
-];
-
-function FolderIcon() {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-      <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
-    </svg>
-  );
-}
+import { mockEvents } from '../../data/mock';
+import { facultyShowcase, studentShowcase, getUserById } from '../../data/users';
+import { campusAssets } from '../../data/images';
+import { getInitials } from '../../utils';
 
 export function HomePage() {
-  const { currentRole } = useDemoRole();
-
-  const dashboardPath =
-    currentRole === 'student'
-      ? '/student/dashboard'
-      : currentRole === 'faculty'
-      ? '/faculty/dashboard'
-      : '/admin/dashboard';
-
-  const featuredProjects = mockProjects.filter((p) => p.status === 'in_progress').slice(0, 3);
+  // 5 featured demonstration projects
+  const featuredProjects = mockProjects.slice(0, 5);
+  // Upcoming events
   const upcomingEvents = mockEvents.slice(0, 3);
-  const featuredArticles = mockBlogPosts.slice(0, 3);
+
+  // Innovation Journey Stages
+  const journeyStages = [
+    {
+      num: '01',
+      title: 'IDEA',
+      desc: 'A student identifies a campus or real-world problem and articulates a proposed technological solution.',
+      icon: <Lightbulb size={20} />,
+      tag: 'Submission',
+    },
+    {
+      num: '02',
+      title: 'TEAM',
+      desc: 'Interested students with complementary skill sets connect, establish roles, and form a project squad.',
+      icon: <Users size={20} />,
+      tag: 'Collaboration',
+    },
+    {
+      num: '03',
+      title: 'PLAN',
+      desc: 'The team defines technical architecture, tool stacks, task breakdowns, and semester milestones.',
+      icon: <Target size={20} />,
+      tag: 'Roadmap',
+    },
+    {
+      num: '04',
+      title: 'MENTORSHIP',
+      desc: 'Faculty mentors provide guidance, review technical design choices, and validate progress milestones.',
+      icon: <GraduationCap size={20} />,
+      tag: 'Faculty Guidance',
+    },
+    {
+      num: '05',
+      title: 'BUILD',
+      desc: 'Students develop prototypes, run test cases, conduct peer code reviews, and refine deliverables.',
+      icon: <Code2 size={20} />,
+      tag: 'Engineering',
+    },
+    {
+      num: '06',
+      title: 'SHOWCASE',
+      desc: 'Teams demonstrate their functioning project at campus showcases and receive evaluation feedback.',
+      icon: <Trophy size={20} />,
+      tag: 'Presentation',
+    },
+    {
+      num: '07',
+      title: 'INCUBATION',
+      desc: 'Eligible projects may be considered for referral to Crieya, subject to institutional process and evaluation.',
+      icon: <Rocket size={20} />,
+      tag: 'Crieya Opportunity',
+    },
+  ];
+
+  // What Students Actually Do (6 Features)
+  const studentFeatures = [
+    {
+      icon: <Lightbulb size={24} />,
+      title: 'Share an Idea',
+      description: 'Propose problems worth solving. Students can articulate ideas, receive peer upvotes, and attract enthusiastic collaborators.',
+      badge: 'Ideation',
+      color: '#3678B7',
+    },
+    {
+      icon: <Users size={24} />,
+      title: 'Find Your Team',
+      description: 'Discover peers with complementary capabilities across web, AI, IoT, and design without traditional department barriers.',
+      badge: 'Teammates',
+      color: '#102743',
+    },
+    {
+      icon: <FolderKanban size={24} />,
+      title: 'Build Real Projects',
+      description: 'Work on structured milestones with task tracking, version control, and faculty reviews to create deployable systems.',
+      badge: 'Execution',
+      color: '#22C55E',
+    },
+    {
+      icon: <BookOpen size={24} />,
+      title: 'Learn Together',
+      description: 'Access curated technical articles, practice quizzes, and workshops authored by senior students and faculty members.',
+      badge: 'Knowledge',
+      color: '#F59E0B',
+    },
+    {
+      icon: <GraduationCap size={24} />,
+      title: 'Learn from Faculty',
+      description: 'Receive experienced guidance on system architecture, research methodology, and preparation for technical publications.',
+      badge: 'Mentorship',
+      color: '#17365D',
+    },
+    {
+      icon: <Rocket size={24} />,
+      title: 'Explore Incubation',
+      description: 'Eligible, high-potential projects can prepare documentation for evaluation and referral to the Crieya incubation pipeline.',
+      badge: 'Pre-Incubation',
+      color: '#8B5CF6',
+    },
+  ];
 
   return (
     <PublicLayout>
-      {/* ── Hero ── */}
+      {/* ──────────────────────────────────────────────────────────────────────────
+          SECTION 1: CINEMATIC CAMPUS HERO
+      ────────────────────────────────────────────────────────────────────────── */}
       <section
-        className="hero-gradient"
-        style={{ padding: '80px 24px 96px' }}
+        style={{
+          position: 'relative',
+          minHeight: '84vh',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundImage: `url(${campusAssets.hero.src})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center 40%',
+          overflow: 'hidden',
+          padding: '100px 24px 80px',
+        }}
       >
-        <div style={{ maxWidth: 820, margin: '0 auto', textAlign: 'center' }}>
-          <div
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 8,
-              padding: '6px 16px',
-              background: 'rgba(255,255,255,0.12)',
-              border: '1px solid rgba(255,255,255,0.2)',
-              borderRadius: 99,
-              fontSize: 13,
-              color: 'rgba(255,255,255,0.9)',
-              fontWeight: 500,
-              marginBottom: 24,
-            }}
-          >
-            <Zap size={14} />
-            Now accepting project applications for Semester 6
+        {/* Navy Cinematic Backdrop Gradient */}
+        <div className="hero-overlay" style={{ position: 'absolute', inset: 0 }} />
+
+        {/* Subtle Ambient Radial Lighting */}
+        <div className="hero-subtle-glow" />
+
+        <div
+          style={{
+            position: 'relative',
+            zIndex: 10,
+            maxWidth: 960,
+            margin: '0 auto',
+            textAlign: 'center',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          {/* Eyebrow Badge */}
+          <div className="eyebrow-badge" style={{ marginBottom: 24 }}>
+            <Building2 size={14} color="#93C5FD" />
+            <span>MIT-ADT UNIVERSITY · RAJBAUG CAMPUS</span>
           </div>
 
+          {/* Main Headline */}
           <h1
             style={{
-              fontSize: 'clamp(36px, 5vw, 60px)',
+              fontSize: 'clamp(36px, 5.5vw, 64px)',
               fontWeight: 800,
               color: '#ffffff',
               lineHeight: 1.15,
-              marginBottom: 20,
-              letterSpacing: '-0.5px',
+              marginBottom: 24,
+              letterSpacing: '-0.03em',
+              textShadow: '0 2px 20px rgba(0,0,0,0.4)',
             }}
           >
-            Where Student Ideas<br />
-            <span style={{ color: '#93C5FD' }}>Become Real Products</span>
+            Where Campus Ideas Become <br />
+            <span style={{ color: '#93C5FD', display: 'inline-block' }}>
+              Tomorrow's Innovations.
+            </span>
           </h1>
 
+          {/* Supporting Copy */}
           <p
             style={{
-              fontSize: 18,
-              color: 'rgba(255,255,255,0.8)',
+              fontSize: 'clamp(16px, 2vw, 19px)',
+              color: 'rgba(255, 255, 255, 0.88)',
               lineHeight: 1.65,
-              maxWidth: 580,
-              margin: '0 auto 36px',
+              maxWidth: 720,
+              margin: '0 auto 40px',
+              fontWeight: 400,
             }}
           >
-            Join the IT Club & Innovation Hub — discover projects, find teammates,
-            learn from mentors, and build the portfolio that defines your career.
+            A collaborative space for students and faculty to explore technology, build meaningful projects,
+            learn together, and transform promising ideas into real-world solutions.
           </p>
 
-          <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
-            <Link to={dashboardPath}>
+          {/* Two Strong Calls to Action */}
+          <div style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap', marginBottom: 56 }}>
+            <Link to="/demo" style={{ textDecoration: 'none' }}>
               <PrimaryButton
                 size="lg"
-                variant="accent"
-                rightIcon={<ArrowRight size={16} />}
-                style={{ background: '#fff', color: 'var(--color-primary)', borderColor: '#fff' }}
+                style={{
+                  background: '#ffffff',
+                  color: 'var(--color-primary-navy)',
+                  borderColor: '#ffffff',
+                  fontWeight: 700,
+                  boxShadow: '0 8px 24px rgba(0,0,0,0.25)',
+                  padding: '14px 28px',
+                }}
+                rightIcon={<ArrowRight size={18} />}
               >
-                Go to Dashboard
+                Explore the Innovation Hub
               </PrimaryButton>
             </Link>
-            <Link to="/projects">
+
+            <a href="#vision" style={{ textDecoration: 'none' }}>
               <SecondaryButton
                 size="lg"
                 style={{
-                  background: 'rgba(255,255,255,0.1)',
-                  borderColor: 'rgba(255,255,255,0.3)',
+                  background: 'rgba(255, 255, 255, 0.12)',
+                  borderColor: 'rgba(255, 255, 255, 0.35)',
                   color: '#ffffff',
+                  fontWeight: 600,
+                  backdropFilter: 'blur(8px)',
+                  padding: '14px 28px',
                 }}
               >
-                Browse Projects
+                Discover the IT Club
               </SecondaryButton>
-            </Link>
+            </a>
           </div>
+
+          {/* Scroll Down Visual Cue */}
+          <a
+            href="#vision"
+            style={{
+              display: 'inline-flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: 6,
+              color: 'rgba(255,255,255,0.7)',
+              fontSize: 12,
+              textDecoration: 'none',
+              transition: 'color 0.2s ease',
+            }}
+          >
+            <span>DISCOVER THE VISION</span>
+            <ChevronDown size={18} style={{ animation: 'floatGentle 2s infinite ease-in-out' }} />
+          </a>
         </div>
       </section>
 
-      {/* ── Stats ── */}
-      <section style={{ background: 'var(--color-surface)', borderBottom: '1px solid var(--color-border)' }}>
+      {/* ──────────────────────────────────────────────────────────────────────────
+          SECTION 2: THE VISION OF THE CLUB (Editorial 2-Column)
+      ────────────────────────────────────────────────────────────────────────── */}
+      <section
+        id="vision"
+        style={{
+          padding: '96px 24px',
+          background: 'var(--color-surface)',
+          borderBottom: '1px solid var(--color-border)',
+        }}
+      >
         <div
           style={{
-            maxWidth: 1000,
+            maxWidth: 1240,
             margin: '0 auto',
-            padding: '32px 24px',
             display: 'grid',
-            gridTemplateColumns: 'repeat(4, 1fr)',
-            gap: 0,
+            gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
+            gap: 48,
+            alignItems: 'center',
           }}
         >
-          {stats.map((stat, i) => (
-            <div
-              key={stat.label}
+          {/* Left Column: Vision Context */}
+          <div>
+            <span className="section-eyebrow">A UNIVERSITY INITIATIVE</span>
+            <h2
               style={{
-                padding: '20px 24px',
-                textAlign: 'center',
-                borderRight: i < stats.length - 1 ? '1px solid var(--color-border)' : 'none',
+                fontSize: 'clamp(30px, 3.8vw, 44px)',
+                fontWeight: 800,
+                color: 'var(--color-primary-navy)',
+                lineHeight: 1.2,
+                marginBottom: 20,
               }}
             >
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: 'var(--color-accent)',
-                  marginBottom: 8,
-                }}
-              >
-                {stat.icon}
-              </div>
-              <p style={{ fontSize: 28, fontWeight: 800, color: 'var(--color-text)', lineHeight: 1 }}>
-                {stat.value}
+              More Than a Club. <br />
+              <span style={{ color: 'var(--color-accent)' }}>A Space to Build.</span>
+            </h2>
+
+            <p
+              style={{
+                fontSize: 17,
+                color: 'var(--color-text)',
+                lineHeight: 1.7,
+                marginBottom: 20,
+                fontWeight: 400,
+              }}
+            >
+              The IT Club & Innovation Hub is envisioned as a collaborative environment where curiosity
+              becomes capability, students discover their strengths, and ideas grow through teamwork and
+              faculty mentorship.
+            </p>
+
+            <p
+              style={{
+                fontSize: 15,
+                color: 'var(--color-text-secondary)',
+                lineHeight: 1.7,
+                marginBottom: 32,
+              }}
+            >
+              Rather than keeping classroom learning in isolation, this platform provides a structured,
+              supportive framework where students across Information Technology, Computer Science, and Design
+              collaborate side-by-side on projects that solve genuine campus and community challenges.
+            </p>
+
+            <div style={{ display: 'flex', gap: 16, alignItems: 'center', flexWrap: 'wrap' }}>
+              <Link to="/demo" style={{ textDecoration: 'none' }}>
+                <PrimaryButton size="md" rightIcon={<ArrowRight size={16} />}>
+                  Discover the Platform
+                </PrimaryButton>
+              </Link>
+              <Link to="/workflow" style={{ textDecoration: 'none' }}>
+                <SecondaryButton size="md">View 7-Step Workflow</SecondaryButton>
+              </Link>
+            </div>
+          </div>
+
+          {/* Right Column: High Quality Photographic Composition */}
+          <div className="img-zoom-container" style={{ borderRadius: 20, boxShadow: 'var(--shadow-elevated)' }}>
+            <img
+              src={campusAssets.visionCollab.src}
+              alt={campusAssets.visionCollab.alt}
+              className="img-zoom"
+              style={{
+                width: '100%',
+                height: 440,
+                objectFit: 'cover',
+                display: 'block',
+                borderRadius: 20,
+              }}
+            />
+            <div
+              style={{
+                position: 'absolute',
+                bottom: 0,
+                left: 0,
+                right: 0,
+                padding: '24px',
+                background: 'linear-gradient(180deg, transparent 0%, rgba(16, 39, 67, 0.85) 100%)',
+                color: '#fff',
+                borderBottomLeftRadius: 20,
+                borderBottomRightRadius: 20,
+              }}
+            >
+              <p style={{ fontSize: 13, fontWeight: 700, letterSpacing: '0.04em', textTransform: 'uppercase', color: '#93C5FD' }}>
+                Collaborative Student Computing Lab
               </p>
-              <p style={{ fontSize: 13, color: 'var(--color-text-secondary)', marginTop: 4 }}>
-                {stat.label}
+              <p style={{ fontSize: 14, opacity: 0.9, margin: 0 }}>
+                Structured peer sessions turn individual questions into team-driven solutions.
               </p>
             </div>
-          ))}
+          </div>
         </div>
       </section>
 
-      {/* ── Features ── */}
-      <section style={{ padding: '72px 24px', background: 'var(--color-bg)' }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: 48 }}>
-            <p style={{ fontSize: 13, fontWeight: 600, color: 'var(--color-accent)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 8 }}>
-              Everything you need
-            </p>
-            <h2 style={{ fontSize: 'clamp(26px, 3vw, 36px)', fontWeight: 700, color: 'var(--color-text)' }}>
-              One platform. Endless possibilities.
+      {/* ──────────────────────────────────────────────────────────────────────────
+          SECTION 3: SHOW THE CAMPUS AND COMMUNITY (Asymmetric 5-Photo Grid)
+      ────────────────────────────────────────────────────────────────────────── */}
+      <section
+        style={{
+          padding: '96px 24px',
+          background: 'var(--color-bg)',
+          borderBottom: '1px solid var(--color-border)',
+        }}
+      >
+        <div style={{ maxWidth: 1240, margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', maxWidth: 700, margin: '0 auto 52px' }}>
+            <span className="section-eyebrow">CAMPUS & COMMUNITY</span>
+            <h2
+              style={{
+                fontSize: 'clamp(28px, 3.5vw, 40px)',
+                fontWeight: 800,
+                color: 'var(--color-primary-navy)',
+                marginBottom: 14,
+              }}
+            >
+              Inspired by Campus. Driven by Innovation.
             </h2>
+            <p style={{ fontSize: 16, color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>
+              Experience the vibrant environment at MIT-ADT University's Rajbaug campus, where modern
+              architecture, lush green spaces, and focused computing labs come together.
+            </p>
           </div>
 
+          {/* Asymmetric Photography Grid */}
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+              gridTemplateColumns: 'repeat(12, 1fr)',
+              gridAutoRows: '260px',
               gap: 20,
             }}
           >
-            {features.map((f) => (
-              <div key={f.title} className="card" style={{ padding: 24 }}>
+            {/* Card 1: Campus Life (Wide Span 7) */}
+            <div
+              className="card img-zoom-container"
+              style={{
+                gridColumn: 'span 7',
+                borderRadius: 18,
+                position: 'relative',
+              }}
+            >
+              <img
+                src={campusAssets.gallery[0].src}
+                alt={campusAssets.gallery[0].alt}
+                className="img-zoom"
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              />
+              <div
+                style={{
+                  position: 'absolute',
+                  inset: 0,
+                  background: 'linear-gradient(180deg, rgba(16,39,67,0.1) 0%, rgba(16,39,67,0.85) 100%)',
+                  padding: 24,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'flex-end',
+                  color: '#fff',
+                }}
+              >
+                <span style={{ fontSize: 11, fontWeight: 700, background: 'rgba(255,255,255,0.2)', padding: '2px 8px', borderRadius: 4, width: 'fit-content', marginBottom: 6 }}>
+                  {campusAssets.gallery[0].tag}
+                </span>
+                <h3 style={{ fontSize: 20, fontWeight: 800, color: '#fff', marginBottom: 4 }}>
+                  {campusAssets.gallery[0].title}
+                </h3>
+                <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.85)', margin: 0, maxWidth: 500 }}>
+                  {campusAssets.gallery[0].description}
+                </p>
+              </div>
+            </div>
+
+            {/* Card 2: Learning Together (Span 5) */}
+            <div
+              className="card img-zoom-container"
+              style={{
+                gridColumn: 'span 5',
+                borderRadius: 18,
+                position: 'relative',
+              }}
+            >
+              <img
+                src={campusAssets.gallery[1].src}
+                alt={campusAssets.gallery[1].alt}
+                className="img-zoom"
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              />
+              <div
+                style={{
+                  position: 'absolute',
+                  inset: 0,
+                  background: 'linear-gradient(180deg, rgba(16,39,67,0.1) 0%, rgba(16,39,67,0.85) 100%)',
+                  padding: 24,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'flex-end',
+                  color: '#fff',
+                }}
+              >
+                <span style={{ fontSize: 11, fontWeight: 700, background: 'rgba(255,255,255,0.2)', padding: '2px 8px', borderRadius: 4, width: 'fit-content', marginBottom: 6 }}>
+                  {campusAssets.gallery[1].tag}
+                </span>
+                <h3 style={{ fontSize: 20, fontWeight: 800, color: '#fff', marginBottom: 4 }}>
+                  {campusAssets.gallery[1].title}
+                </h3>
+                <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.85)', margin: 0 }}>
+                  {campusAssets.gallery[1].description}
+                </p>
+              </div>
+            </div>
+
+            {/* Card 3: Faculty Mentorship (Span 4) */}
+            <div
+              className="card img-zoom-container"
+              style={{
+                gridColumn: 'span 4',
+                borderRadius: 18,
+                position: 'relative',
+              }}
+            >
+              <img
+                src={campusAssets.gallery[2].src}
+                alt={campusAssets.gallery[2].alt}
+                className="img-zoom"
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              />
+              <div
+                style={{
+                  position: 'absolute',
+                  inset: 0,
+                  background: 'linear-gradient(180deg, rgba(16,39,67,0.1) 0%, rgba(16,39,67,0.88) 100%)',
+                  padding: 20,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'flex-end',
+                  color: '#fff',
+                }}
+              >
+                <span style={{ fontSize: 11, fontWeight: 700, background: 'rgba(255,255,255,0.2)', padding: '2px 8px', borderRadius: 4, width: 'fit-content', marginBottom: 6 }}>
+                  {campusAssets.gallery[2].tag}
+                </span>
+                <h3 style={{ fontSize: 18, fontWeight: 800, color: '#fff', marginBottom: 4 }}>
+                  {campusAssets.gallery[2].title}
+                </h3>
+                <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.85)', margin: 0 }}>
+                  {campusAssets.gallery[2].description}
+                </p>
+              </div>
+            </div>
+
+            {/* Card 4: Building Projects (Span 4) */}
+            <div
+              className="card img-zoom-container"
+              style={{
+                gridColumn: 'span 4',
+                borderRadius: 18,
+                position: 'relative',
+              }}
+            >
+              <img
+                src={campusAssets.gallery[3].src}
+                alt={campusAssets.gallery[3].alt}
+                className="img-zoom"
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              />
+              <div
+                style={{
+                  position: 'absolute',
+                  inset: 0,
+                  background: 'linear-gradient(180deg, rgba(16,39,67,0.1) 0%, rgba(16,39,67,0.88) 100%)',
+                  padding: 20,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'flex-end',
+                  color: '#fff',
+                }}
+              >
+                <span style={{ fontSize: 11, fontWeight: 700, background: 'rgba(255,255,255,0.2)', padding: '2px 8px', borderRadius: 4, width: 'fit-content', marginBottom: 6 }}>
+                  {campusAssets.gallery[3].tag}
+                </span>
+                <h3 style={{ fontSize: 18, fontWeight: 800, color: '#fff', marginBottom: 4 }}>
+                  {campusAssets.gallery[3].title}
+                </h3>
+                <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.85)', margin: 0 }}>
+                  {campusAssets.gallery[3].description}
+                </p>
+              </div>
+            </div>
+
+            {/* Card 5: Innovation in Action (Span 4) */}
+            <div
+              className="card img-zoom-container"
+              style={{
+                gridColumn: 'span 4',
+                borderRadius: 18,
+                position: 'relative',
+              }}
+            >
+              <img
+                src={campusAssets.gallery[4].src}
+                alt={campusAssets.gallery[4].alt}
+                className="img-zoom"
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              />
+              <div
+                style={{
+                  position: 'absolute',
+                  inset: 0,
+                  background: 'linear-gradient(180deg, rgba(16,39,67,0.1) 0%, rgba(16,39,67,0.88) 100%)',
+                  padding: 20,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'flex-end',
+                  color: '#fff',
+                }}
+              >
+                <span style={{ fontSize: 11, fontWeight: 700, background: 'rgba(255,255,255,0.2)', padding: '2px 8px', borderRadius: 4, width: 'fit-content', marginBottom: 6 }}>
+                  {campusAssets.gallery[4].tag}
+                </span>
+                <h3 style={{ fontSize: 18, fontWeight: 800, color: '#fff', marginBottom: 4 }}>
+                  {campusAssets.gallery[4].title}
+                </h3>
+                <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.85)', margin: 0 }}>
+                  {campusAssets.gallery[4].description}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ──────────────────────────────────────────────────────────────────────────
+          SECTION 4: FACULTY AND MENTORSHIP
+      ────────────────────────────────────────────────────────────────────────── */}
+      <section
+        style={{
+          padding: '96px 24px',
+          background: 'var(--color-surface)',
+          borderBottom: '1px solid var(--color-border)',
+        }}
+      >
+        <div style={{ maxWidth: 1240, margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', maxWidth: 740, margin: '0 auto 52px' }}>
+            <span className="section-eyebrow">ACADEMIC LEADERSHIP</span>
+            <h2
+              style={{
+                fontSize: 'clamp(28px, 3.5vw, 40px)',
+                fontWeight: 800,
+                color: 'var(--color-primary-navy)',
+                marginBottom: 14,
+              }}
+            >
+              Guided by Experience. Empowering the Next Generation.
+            </h2>
+            <p style={{ fontSize: 16, color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>
+              Faculty mentorship can help students refine ideas, develop project plans, build technical
+              confidence, and evaluate outcomes.
+            </p>
+          </div>
+
+          {/* 3 Requested Faculty Profiles */}
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+              gap: 28,
+            }}
+          >
+            {facultyShowcase.map((faculty) => (
+              <div
+                key={faculty.title}
+                className="card card-hover"
+                style={{
+                  padding: 28,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  borderRadius: 18,
+                  border: '1px solid var(--color-border)',
+                }}
+              >
+                {/* Portrait Area (Polished Initials-Based Avatar Fallback) */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 20 }}>
+                  <div
+                    style={{
+                      width: 68,
+                      height: 68,
+                      borderRadius: 16,
+                      background: 'linear-gradient(135deg, #102743 0%, #17365D 100%)',
+                      color: '#ffffff',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: 22,
+                      fontWeight: 800,
+                      flexShrink: 0,
+                      border: '2px solid rgba(16, 39, 67, 0.1)',
+                      boxShadow: '0 4px 12px rgba(16, 39, 67, 0.15)',
+                    }}
+                  >
+                    {getInitials(faculty.title.replace('Dr. ', '').replace('Prof. ', ''))}
+                  </div>
+                  <div>
+                    <h3 style={{ fontSize: 19, fontWeight: 800, color: 'var(--color-primary-navy)', marginBottom: 2 }}>
+                      {faculty.title}
+                    </h3>
+                    <p style={{ fontSize: 13, fontWeight: 600, color: 'var(--color-accent)', margin: 0 }}>
+                      {faculty.designation}
+                    </p>
+                    <p style={{ fontSize: 12, color: 'var(--color-text-secondary)', margin: 0, marginTop: 2 }}>
+                      {faculty.department}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Expertise Tag */}
                 <div
                   style={{
-                    width: 48,
-                    height: 48,
-                    borderRadius: 12,
-                    background: `${f.color}18`,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: f.color,
+                    padding: '8px 12px',
+                    background: 'var(--color-accent-light)',
+                    borderRadius: 8,
+                    marginBottom: 16,
+                    border: '1px solid #D1E5F8',
+                  }}
+                >
+                  <p style={{ fontSize: 11, fontWeight: 700, color: 'var(--color-accent)', textTransform: 'uppercase', letterSpacing: '0.04em', margin: 0, marginBottom: 2 }}>
+                    Focus & Areas of Expertise
+                  </p>
+                  <p style={{ fontSize: 13, color: 'var(--color-primary-navy)', fontWeight: 600, margin: 0 }}>
+                    {faculty.expertise}
+                  </p>
+                </div>
+
+                {/* Short Verified Professional Description */}
+                <p style={{ fontSize: 14, color: 'var(--color-text-secondary)', lineHeight: 1.6, flex: 1, margin: 0 }}>
+                  {faculty.bio}
+                </p>
+
+                <div style={{ marginTop: 20, paddingTop: 16, borderTop: '1px solid var(--color-border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <span style={{ fontSize: 12, color: 'var(--color-text-secondary)' }}>
+                    🏛️ MIT-ADT Faculty Mentor
+                  </span>
+                  <Link to="/faculty/dashboard" style={{ textDecoration: 'none' }}>
+                    <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--color-accent)', display: 'inline-flex', alignItems: 'center', gap: 4 }}>
+                      View Portal <ArrowUpRight size={14} />
+                    </span>
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ──────────────────────────────────────────────────────────────────────────
+          SECTION 5: FACULTY FACILITATING STUDENTS
+      ────────────────────────────────────────────────────────────────────────── */}
+      <section
+        style={{
+          padding: '96px 24px',
+          background: 'var(--color-bg)',
+          borderBottom: '1px solid var(--color-border)',
+        }}
+      >
+        <div style={{ maxWidth: 1240, margin: '0 auto' }}>
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
+              gap: 48,
+              alignItems: 'center',
+            }}
+          >
+            {/* Left Column: Visual Composition with 3 Photos */}
+            <div>
+              {/* 1 Large Workshop Photograph */}
+              <div className="img-zoom-container" style={{ borderRadius: 16, marginBottom: 16, boxShadow: 'var(--shadow-card)' }}>
+                <img
+                  src={campusAssets.facultyFacilitation.main.src}
+                  alt={campusAssets.facultyFacilitation.main.alt}
+                  className="img-zoom"
+                  style={{ width: '100%', height: 280, objectFit: 'cover', display: 'block', borderRadius: 16 }}
+                />
+              </div>
+
+              {/* 2 Smaller Supporting Photographs */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+                <div className="img-zoom-container" style={{ borderRadius: 12, boxShadow: 'var(--shadow-card)' }}>
+                  <img
+                    src={campusAssets.facultyFacilitation.secondary1.src}
+                    alt={campusAssets.facultyFacilitation.secondary1.alt}
+                    className="img-zoom"
+                    style={{ width: '100%', height: 160, objectFit: 'cover', display: 'block', borderRadius: 12 }}
+                  />
+                </div>
+                <div className="img-zoom-container" style={{ borderRadius: 12, boxShadow: 'var(--shadow-card)' }}>
+                  <img
+                    src={campusAssets.facultyFacilitation.secondary2.src}
+                    alt={campusAssets.facultyFacilitation.secondary2.alt}
+                    className="img-zoom"
+                    style={{ width: '100%', height: 160, objectFit: 'cover', display: 'block', borderRadius: 12 }}
+                  />
+                </div>
+              </div>
+
+              <div style={{ marginTop: 10, display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, color: 'var(--color-text-secondary)' }}>
+                <Info size={13} />
+                <span>Illustrative session photography · Official campus photographs can be uploaded directly.</span>
+              </div>
+            </div>
+
+            {/* Right Column: Editorial Text & Proposed Activities */}
+            <div>
+              <span className="section-eyebrow">FACILITATED INNOVATION</span>
+              <h2
+                style={{
+                  fontSize: 'clamp(28px, 3.5vw, 40px)',
+                  fontWeight: 800,
+                  color: 'var(--color-primary-navy)',
+                  lineHeight: 1.2,
+                  marginBottom: 16,
+                }}
+              >
+                Great Ideas Grow with the Right Guidance.
+              </h2>
+              <p
+                style={{
+                  fontSize: 16,
+                  color: 'var(--color-text)',
+                  lineHeight: 1.65,
+                  marginBottom: 28,
+                }}
+              >
+                Through collaborative sessions, project discussions, and mentorship, students can turn
+                curiosity into structured, meaningful work. Faculty guidance bridges the gap between conceptual
+                curiosity and industry-standard execution.
+              </p>
+
+              {/* Proposed Activities Grid */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 32 }}>
+                {[
+                  {
+                    title: 'Idea Discussions',
+                    desc: 'Weekly open forums to critique and shape project problem statements.',
+                  },
+                  {
+                    title: 'Project Reviews',
+                    desc: 'Milestone checks ensuring code quality, security, and architectural rigor.',
+                  },
+                  {
+                    title: 'Technical Workshops',
+                    desc: 'Deep dives on cloud deployments, AI algorithms, and embedded systems.',
+                  },
+                  {
+                    title: 'Mentoring Sessions',
+                    desc: 'One-on-one advisory connecting student teams with research literature.',
+                  },
+                ].map((act) => (
+                  <div
+                    key={act.title}
+                    style={{
+                      padding: 16,
+                      background: 'var(--color-surface)',
+                      borderRadius: 12,
+                      border: '1px solid var(--color-border)',
+                    }}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
+                      <CheckCircle2 size={16} color="var(--color-accent)" />
+                      <h4 style={{ fontSize: 14, fontWeight: 700, color: 'var(--color-primary-navy)' }}>
+                        {act.title}
+                      </h4>
+                    </div>
+                    <p style={{ fontSize: 12, color: 'var(--color-text-secondary)', lineHeight: 1.5, margin: 0 }}>
+                      {act.desc}
+                    </p>
+                  </div>
+                ))}
+              </div>
+
+              <Link to="/workflow" style={{ textDecoration: 'none' }}>
+                <PrimaryButton size="md" rightIcon={<ArrowRight size={16} />}>
+                  Explore Mentorship Workflow
+                </PrimaryButton>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ──────────────────────────────────────────────────────────────────────────
+          SECTION 6: STUDENT COMMUNITY
+      ────────────────────────────────────────────────────────────────────────── */}
+      <section
+        style={{
+          padding: '96px 24px',
+          background: 'var(--color-surface)',
+          borderBottom: '1px solid var(--color-border)',
+        }}
+      >
+        <div style={{ maxWidth: 1240, margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', maxWidth: 740, margin: '0 auto 52px' }}>
+            <span className="section-eyebrow">STUDENT INNOVATORS</span>
+            <h2
+              style={{
+                fontSize: 'clamp(28px, 3.5vw, 40px)',
+                fontWeight: 800,
+                color: 'var(--color-primary-navy)',
+                marginBottom: 12,
+              }}
+            >
+              Different Skills. Shared Curiosity. One Innovation Community.
+            </h2>
+            <p style={{ fontSize: 16, color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>
+              Meet student builders from Information Technology and Computer Science exploring technologies,
+              leading squads, and prototyping solutions for college and community challenges.
+            </p>
+          </div>
+
+          {/* 4 Requested Student Innovators */}
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+              gap: 24,
+            }}
+          >
+            {studentShowcase.map((student) => (
+              <div
+                key={student.id}
+                className="card card-hover"
+                style={{
+                  padding: 24,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  borderRadius: 16,
+                  border: '1px solid var(--color-border)',
+                }}
+              >
+                {/* Profile Avatar & Header */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 16 }}>
+                  <div
+                    style={{
+                      width: 52,
+                      height: 52,
+                      borderRadius: 14,
+                      background: 'linear-gradient(135deg, #3678B7 0%, #17365D 100%)',
+                      color: '#ffffff',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: 18,
+                      fontWeight: 800,
+                      flexShrink: 0,
+                    }}
+                  >
+                    {getInitials(student.name)}
+                  </div>
+                  <div>
+                    <h3 style={{ fontSize: 17, fontWeight: 800, color: 'var(--color-primary-navy)', marginBottom: 2 }}>
+                      {student.name}
+                    </h3>
+                    <p style={{ fontSize: 12, color: 'var(--color-accent)', fontWeight: 600, margin: 0 }}>
+                      {student.designation || 'Student Innovator'}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Technology Interests */}
+                <div style={{ marginBottom: 14 }}>
+                  <span style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em', color: 'var(--color-text-secondary)' }}>
+                    Core Interests:
+                  </span>
+                  <p style={{ fontSize: 13, color: 'var(--color-text)', fontWeight: 600, margin: '4px 0 0' }}>
+                    {student.interests || 'Software Engineering & Web'}
+                  </p>
+                </div>
+
+                {/* Current Project */}
+                <div
+                  style={{
+                    padding: '8px 12px',
+                    background: 'var(--color-bg)',
+                    borderRadius: 8,
                     marginBottom: 16,
                   }}
                 >
-                  {f.icon}
+                  <span style={{ fontSize: 11, color: 'var(--color-text-secondary)', display: 'block' }}>
+                    Active Project:
+                  </span>
+                  <span style={{ fontSize: 12, fontWeight: 700, color: 'var(--color-primary-navy)' }}>
+                    {student.currentProject || 'Campus Project Initiative'}
+                  </span>
                 </div>
-                <h3 style={{ fontSize: 16, fontWeight: 700, marginBottom: 8, color: 'var(--color-text)' }}>
-                  {f.title}
+
+                {/* Skills tags */}
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 20, flex: 1 }}>
+                  {student.skills?.slice(0, 4).map((skill) => (
+                    <span
+                      key={skill}
+                      style={{
+                        fontSize: 11,
+                        background: 'var(--color-accent-light)',
+                        color: 'var(--color-accent)',
+                        padding: '3px 8px',
+                        borderRadius: 4,
+                        fontWeight: 600,
+                      }}
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+
+                {/* View Profile Action */}
+                <Link to="/student/dashboard" style={{ textDecoration: 'none' }}>
+                  <button
+                    className="btn btn-secondary btn-sm"
+                    style={{ width: '100%', justifyContent: 'space-between', fontWeight: 600 }}
+                  >
+                    <span>View Student Profile</span>
+                    <ArrowRight size={14} />
+                  </button>
+                </Link>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ──────────────────────────────────────────────────────────────────────────
+          SECTION 7: WHAT WILL STUDENTS ACTUALLY DO? (6 Distinct Features)
+      ────────────────────────────────────────────────────────────────────────── */}
+      <section
+        style={{
+          padding: '96px 24px',
+          background: 'var(--color-bg)',
+          borderBottom: '1px solid var(--color-border)',
+        }}
+      >
+        <div style={{ maxWidth: 1240, margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', maxWidth: 700, margin: '0 auto 52px' }}>
+            <span className="section-eyebrow">PRACTICAL CLUB VALUE</span>
+            <h2
+              style={{
+                fontSize: 'clamp(28px, 3.5vw, 40px)',
+                fontWeight: 800,
+                color: 'var(--color-primary-navy)',
+                marginBottom: 14,
+              }}
+            >
+              From Curiosity to Creation.
+            </h2>
+            <p style={{ fontSize: 16, color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>
+              A clear, accessible path for any university student to get involved, contribute their talents,
+              and build practical confidence without unnecessary technical friction.
+            </p>
+          </div>
+
+          {/* 6 Visually Distinct Feature Cards */}
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+              gap: 24,
+            }}
+          >
+            {studentFeatures.map((feat) => (
+              <div
+                key={feat.title}
+                className="card card-hover"
+                style={{
+                  padding: 28,
+                  borderRadius: 16,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  border: '1px solid var(--color-border)',
+                  background: 'var(--color-surface)',
+                }}
+              >
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
+                  <div
+                    style={{
+                      width: 50,
+                      height: 50,
+                      borderRadius: 12,
+                      background: 'var(--color-accent-light)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: feat.color,
+                    }}
+                  >
+                    {feat.icon}
+                  </div>
+                  <span
+                    style={{
+                      fontSize: 11,
+                      fontWeight: 700,
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.06em',
+                      color: 'var(--color-text-secondary)',
+                      background: 'var(--color-bg)',
+                      padding: '4px 10px',
+                      borderRadius: 99,
+                    }}
+                  >
+                    {feat.badge}
+                  </span>
+                </div>
+
+                <h3 style={{ fontSize: 18, fontWeight: 800, color: 'var(--color-primary-navy)', marginBottom: 10 }}>
+                  {feat.title}
                 </h3>
-                <p style={{ fontSize: 14, color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>
-                  {f.description}
+                <p style={{ fontSize: 14, color: 'var(--color-text-secondary)', lineHeight: 1.6, margin: 0 }}>
+                  {feat.description}
                 </p>
               </div>
             ))}
@@ -242,63 +1107,327 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* ── Active Projects ── */}
-      <section style={{ padding: '60px 24px', background: 'var(--color-surface)', borderTop: '1px solid var(--color-border)' }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'baseline',
-              marginBottom: 28,
-              flexWrap: 'wrap',
-              gap: 12,
-            }}
-          >
-            <div>
-              <h2 style={{ fontSize: 22, fontWeight: 700 }}>Active Projects</h2>
-              <p style={{ fontSize: 14, color: 'var(--color-text-secondary)', marginTop: 4 }}>
-                Open for applications — join a team today
-              </p>
-            </div>
-            <Link to="/projects">
-              <GhostButton rightIcon={<ArrowRight size={14} />}>View all projects</GhostButton>
-            </Link>
+      {/* ──────────────────────────────────────────────────────────────────────────
+          SECTION 8: THE INNOVATION JOURNEY (01 to 07 Horizontal Timeline)
+      ────────────────────────────────────────────────────────────────────────── */}
+      <section
+        style={{
+          padding: '96px 24px',
+          background: 'var(--color-primary-navy)',
+          color: '#ffffff',
+          borderBottom: '1px solid rgba(255,255,255,0.08)',
+        }}
+      >
+        <div style={{ maxWidth: 1240, margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', maxWidth: 740, margin: '0 auto 56px' }}>
+            <span
+              style={{
+                fontSize: 12,
+                fontWeight: 700,
+                color: '#93C5FD',
+                letterSpacing: '0.1em',
+                textTransform: 'uppercase',
+                marginBottom: 8,
+                display: 'inline-block',
+              }}
+            >
+              STRUCTURED PROJECT EVOLUTION
+            </span>
+            <h2
+              style={{
+                fontSize: 'clamp(28px, 3.5vw, 42px)',
+                fontWeight: 800,
+                color: '#ffffff',
+                marginBottom: 14,
+              }}
+            >
+              Every Great Project Starts with an Idea.
+            </h2>
+            <p style={{ fontSize: 16, color: 'rgba(255, 255, 255, 0.8)', lineHeight: 1.6 }}>
+              From initial spark to potential incubation evaluation — how students navigate a transparent,
+              guided progression.
+            </p>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 16 }}>
-            {featuredProjects.map((project) => (
-              <ProjectCard key={project.id} project={project} href={`/projects/${project.id}`} />
+          {/* Timeline Grid (Horizontal on Desktop, Stacked on Mobile) */}
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
+              gap: 16,
+              marginBottom: 40,
+            }}
+          >
+            {journeyStages.map((stage) => (
+              <div
+                key={stage.num}
+                style={{
+                  background: 'rgba(255, 255, 255, 0.06)',
+                  border: '1px solid rgba(255, 255, 255, 0.12)',
+                  borderRadius: 14,
+                  padding: 20,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  position: 'relative',
+                  backdropFilter: 'blur(6px)',
+                }}
+              >
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
+                  <span style={{ fontSize: 12, fontWeight: 800, color: '#93C5FD', letterSpacing: '0.04em' }}>
+                    {stage.num}
+                  </span>
+                  <div style={{ color: 'rgba(255,255,255,0.7)' }}>
+                    {stage.icon}
+                  </div>
+                </div>
+
+                <h4 style={{ fontSize: 15, fontWeight: 800, color: '#ffffff', marginBottom: 8 }}>
+                  {stage.title}
+                </h4>
+
+                <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.75)', lineHeight: 1.5, margin: 0, flex: 1 }}>
+                  {stage.desc}
+                </p>
+
+                <div style={{ marginTop: 14, paddingTop: 10, borderTop: '1px solid rgba(255,255,255,0.1)' }}>
+                  <span style={{ fontSize: 10, fontWeight: 700, color: '#93C5FD', textTransform: 'uppercase' }}>
+                    {stage.tag}
+                  </span>
+                </div>
+              </div>
             ))}
+          </div>
+
+          {/* Crieya Disclaimer & Transparency Note */}
+          <div
+            style={{
+              background: 'rgba(255, 255, 255, 0.05)',
+              border: '1px solid rgba(255, 255, 255, 0.1)',
+              borderRadius: 12,
+              padding: '14px 20px',
+              textAlign: 'center',
+              maxWidth: 820,
+              margin: '0 auto',
+            }}
+          >
+            <p style={{ fontSize: 12, color: 'rgba(255, 255, 255, 0.72)', margin: 0, lineHeight: 1.5 }}>
+              * Stage 07 indicates eligibility for referral to Crieya (Incubation Center), which remains subject to
+              independent institutional review, technical diligence, and official university incubation procedures.
+            </p>
           </div>
         </div>
       </section>
 
-      {/* ── Upcoming Events ── */}
-      <section style={{ padding: '60px 24px', background: 'var(--color-bg)' }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+      {/* ──────────────────────────────────────────────────────────────────────────
+          SECTION 9: PROJECT SHOWCASE (Featured Demo Projects)
+      ────────────────────────────────────────────────────────────────────────── */}
+      <section
+        style={{
+          padding: '96px 24px',
+          background: 'var(--color-surface)',
+          borderBottom: '1px solid var(--color-border)',
+        }}
+      >
+        <div style={{ maxWidth: 1240, margin: '0 auto' }}>
           <div
             style={{
               display: 'flex',
               justifyContent: 'space-between',
-              alignItems: 'baseline',
-              marginBottom: 28,
+              alignItems: 'flex-end',
+              marginBottom: 48,
               flexWrap: 'wrap',
-              gap: 12,
+              gap: 16,
             }}
           >
             <div>
-              <h2 style={{ fontSize: 22, fontWeight: 700 }}>Upcoming Events</h2>
-              <p style={{ fontSize: 14, color: 'var(--color-text-secondary)', marginTop: 4 }}>
-                Hackathons, workshops, and more
+              <span className="section-eyebrow">PORTFOLIO & PROTOTYPES</span>
+              <h2
+                style={{
+                  fontSize: 'clamp(28px, 3.5vw, 40px)',
+                  fontWeight: 800,
+                  color: 'var(--color-primary-navy)',
+                  marginBottom: 6,
+                }}
+              >
+                Imagine What We Can Build Together.
+              </h2>
+              <p style={{ fontSize: 15, color: 'var(--color-text-secondary)', margin: 0 }}>
+                Explore demonstration initiatives designed to address student collaboration, research, and campus infrastructure.
               </p>
             </div>
-            <Link to="/events">
-              <GhostButton rightIcon={<ArrowRight size={14} />}>View all events</GhostButton>
+
+            <Link to="/projects" style={{ textDecoration: 'none' }}>
+              <SecondaryButton size="md" rightIcon={<ArrowRight size={15} />}>
+                View All Projects
+              </SecondaryButton>
             </Link>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 16 }}>
+          {/* 5 Demonstration Projects */}
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
+              gap: 28,
+            }}
+          >
+            {featuredProjects.map((project) => {
+              const leadUser = getUserById(project.leadId);
+              const mentorUser = project.mentorId ? getUserById(project.mentorId) : undefined;
+
+              return (
+                <div
+                  key={project.id}
+                  className="card card-hover"
+                  style={{
+                    borderRadius: 18,
+                    overflow: 'hidden',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    border: '1px solid var(--color-border)',
+                  }}
+                >
+                  {/* Project Cover Image */}
+                  <div className="img-zoom-container" style={{ height: 200, position: 'relative' }}>
+                    <img
+                      src={project.thumbnail || campusAssets.projects.campusConnect.src}
+                      alt={project.title}
+                      className="img-zoom"
+                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    />
+                    <div
+                      style={{
+                        position: 'absolute',
+                        top: 12,
+                        right: 12,
+                        background: 'rgba(16, 39, 67, 0.85)',
+                        backdropFilter: 'blur(6px)',
+                        color: '#fff',
+                        fontSize: 11,
+                        fontWeight: 700,
+                        padding: '4px 10px',
+                        borderRadius: 99,
+                        letterSpacing: '0.04em',
+                      }}
+                    >
+                      PROTOTYPE
+                    </div>
+                  </div>
+
+                  <div style={{ padding: 24, display: 'flex', flexDirection: 'column', flex: 1 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
+                      <span style={{ fontSize: 12, fontWeight: 700, color: 'var(--color-accent)' }}>
+                        {project.category}
+                      </span>
+                      {project.incubationReferred && (
+                        <span style={{ fontSize: 10, fontWeight: 700, background: '#EDE9FE', color: '#6D28D9', padding: '2px 8px', borderRadius: 4 }}>
+                          Crieya Track
+                        </span>
+                      )}
+                    </div>
+
+                    <h3 style={{ fontSize: 19, fontWeight: 800, color: 'var(--color-primary-navy)', marginBottom: 8 }}>
+                      {project.title}
+                    </h3>
+
+                    {/* Problem & Solution in plain language */}
+                    <div style={{ marginBottom: 16 }}>
+                      <p style={{ fontSize: 13, color: 'var(--color-text)', lineHeight: 1.55, marginBottom: 8 }}>
+                        <strong>Challenge:</strong> {project.problemStatement || project.description}
+                      </p>
+                      <p style={{ fontSize: 13, color: 'var(--color-text-secondary)', lineHeight: 1.55 }}>
+                        <strong>Approach:</strong> {project.proposedSolution || project.longDescription?.slice(0, 140)}...
+                      </p>
+                    </div>
+
+                    {/* Tech Tags */}
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 18 }}>
+                      {project.tags.slice(0, 4).map((t) => (
+                        <span
+                          key={t}
+                          style={{
+                            fontSize: 11,
+                            background: 'var(--color-bg)',
+                            color: 'var(--color-text)',
+                            padding: '3px 8px',
+                            borderRadius: 4,
+                            border: '1px solid var(--color-border)',
+                          }}
+                        >
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+
+                    {/* Lead & Mentor info */}
+                    <div style={{ marginTop: 'auto', paddingTop: 16, borderTop: '1px solid var(--color-border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <div style={{ fontSize: 12, color: 'var(--color-text-secondary)' }}>
+                        <span>Lead: <strong>{leadUser?.name || 'Student Lead'}</strong></span>
+                        {mentorUser && <span style={{ display: 'block', fontSize: 11, color: 'var(--color-accent)' }}>Mentor: {mentorUser.name}</span>}
+                      </div>
+
+                      <Link to={`/projects/${project.id}`} style={{ textDecoration: 'none' }}>
+                        <button className="btn btn-ghost btn-sm" style={{ fontWeight: 600 }}>
+                          <span>Details</span>
+                          <ArrowRight size={13} />
+                        </button>
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ──────────────────────────────────────────────────────────────────────────
+          SECTION 10: EVENTS, WORKSHOPS AND CAMPUS ACTIVITIES
+      ────────────────────────────────────────────────────────────────────────── */}
+      <section
+        style={{
+          padding: '96px 24px',
+          background: 'var(--color-bg)',
+          borderBottom: '1px solid var(--color-border)',
+        }}
+      >
+        <div style={{ maxWidth: 1240, margin: '0 auto' }}>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'flex-end',
+              marginBottom: 48,
+              flexWrap: 'wrap',
+              gap: 16,
+            }}
+          >
+            <div>
+              <span className="section-eyebrow">CAMPUS ENGAGEMENT</span>
+              <h2
+                style={{
+                  fontSize: 'clamp(28px, 3.5vw, 40px)',
+                  fontWeight: 800,
+                  color: 'var(--color-primary-navy)',
+                  marginBottom: 6,
+                }}
+              >
+                Workshops, Hackathons & Technical Sprints.
+              </h2>
+              <p style={{ fontSize: 15, color: 'var(--color-text-secondary)', margin: 0 }}>
+                Hands-on sessions designed to sharpen skills, prototype under deadlines, and connect with mentors.
+              </p>
+            </div>
+
+            <Link to="/events" style={{ textDecoration: 'none' }}>
+              <SecondaryButton size="md" rightIcon={<ArrowRight size={15} />}>
+                Explore Club Activities
+              </SecondaryButton>
+            </Link>
+          </div>
+
+          {/* Photographic Event Cards */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 24 }}>
             {upcomingEvents.map((event) => (
               <EventCard key={event.id} event={event} href={`/events/${event.id}`} />
             ))}
@@ -306,88 +1435,322 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* ── From the Blog ── */}
-      <section style={{ padding: '60px 24px', background: 'var(--color-surface)', borderTop: '1px solid var(--color-border)' }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'baseline',
-              marginBottom: 28,
-              flexWrap: 'wrap',
-              gap: 12,
-            }}
-          >
-            <div>
-              <h2 style={{ fontSize: 22, fontWeight: 700 }}>From the Blog</h2>
-              <p style={{ fontSize: 14, color: 'var(--color-text-secondary)', marginTop: 4 }}>
-                Articles and tutorials from our members
-              </p>
-            </div>
-            <Link to="/learn">
-              <GhostButton rightIcon={<ArrowRight size={14} />}>Browse articles</GhostButton>
-            </Link>
+      {/* ──────────────────────────────────────────────────────────────────────────
+          SECTION 11: LEARNING AND INNOVATION PLATFORM (3 Workspaces)
+      ────────────────────────────────────────────────────────────────────────── */}
+      <section
+        style={{
+          padding: '96px 24px',
+          background: 'var(--color-surface)',
+          borderBottom: '1px solid var(--color-border)',
+        }}
+      >
+        <div style={{ maxWidth: 1240, margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', maxWidth: 740, margin: '0 auto 52px' }}>
+            <span className="section-eyebrow">PLATFORM ARCHITECTURE</span>
+            <h2
+              style={{
+                fontSize: 'clamp(28px, 3.5vw, 40px)',
+                fontWeight: 800,
+                color: 'var(--color-primary-navy)',
+                marginBottom: 14,
+              }}
+            >
+              Everything Students Need to Move Forward.
+            </h2>
+            <p style={{ fontSize: 16, color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>
+              A single unified environment connecting student initiative, faculty mentorship, and club governance.
+            </p>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 16 }}>
-            {featuredArticles.map((post) => (
-              <ArticleCard key={post.id} post={post} href={`/learn/${post.slug}`} />
-            ))}
+          {/* 3 Feature Panels */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 24, marginBottom: 40 }}>
+            {/* Student Workspace */}
+            <div
+              className="card card-hover"
+              style={{
+                padding: 32,
+                borderRadius: 18,
+                border: '1px solid var(--color-border)',
+                display: 'flex',
+                flexDirection: 'column',
+              }}
+            >
+              <div
+                style={{
+                  width: 52,
+                  height: 52,
+                  borderRadius: 12,
+                  background: 'var(--color-accent-light)',
+                  color: 'var(--color-accent)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginBottom: 20,
+                }}
+              >
+                <GraduationCap size={26} />
+              </div>
+
+              <span style={{ fontSize: 12, fontWeight: 700, color: 'var(--color-accent)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+                STUDENT WORKSPACE
+              </span>
+              <h3 style={{ fontSize: 20, fontWeight: 800, color: 'var(--color-primary-navy)', margin: '6px 0 12px' }}>
+                Build, Collaborate & Learn
+              </h3>
+              <p style={{ fontSize: 14, color: 'var(--color-text-secondary)', lineHeight: 1.6, marginBottom: 20, flex: 1 }}>
+                Students can manage ideas, projects, teammate applications, task boards, and track quiz learning activity.
+              </p>
+
+              <Link to="/student/dashboard" style={{ textDecoration: 'none' }}>
+                <PrimaryButton size="sm" style={{ width: '100%', justifyContent: 'space-between' }}>
+                  <span>Enter Student Portal</span>
+                  <ArrowRight size={14} />
+                </PrimaryButton>
+              </Link>
+            </div>
+
+            {/* Faculty Workspace */}
+            <div
+              className="card card-hover"
+              style={{
+                padding: 32,
+                borderRadius: 18,
+                border: '1px solid var(--color-border)',
+                display: 'flex',
+                flexDirection: 'column',
+              }}
+            >
+              <div
+                style={{
+                  width: 52,
+                  height: 52,
+                  borderRadius: 12,
+                  background: 'rgba(23, 54, 93, 0.1)',
+                  color: 'var(--color-secondary-navy)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginBottom: 20,
+                }}
+              >
+                <UserCheck size={26} />
+              </div>
+
+              <span style={{ fontSize: 12, fontWeight: 700, color: 'var(--color-secondary-navy)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+                FACULTY WORKSPACE
+              </span>
+              <h3 style={{ fontSize: 20, fontWeight: 800, color: 'var(--color-primary-navy)', margin: '6px 0 12px' }}>
+                Guide, Review & Mentorship
+              </h3>
+              <p style={{ fontSize: 14, color: 'var(--color-text-secondary)', lineHeight: 1.6, marginBottom: 20, flex: 1 }}>
+                Faculty can review student ideas, guide project teams, monitor sprint progress, and conduct structured review sessions.
+              </p>
+
+              <Link to="/faculty/dashboard" style={{ textDecoration: 'none' }}>
+                <PrimaryButton size="sm" style={{ width: '100%', justifyContent: 'space-between', background: 'var(--color-secondary-navy)' }}>
+                  <span>Enter Faculty Portal</span>
+                  <ArrowRight size={14} />
+                </PrimaryButton>
+              </Link>
+            </div>
+
+            {/* Club Management */}
+            <div
+              className="card card-hover"
+              style={{
+                padding: 32,
+                borderRadius: 18,
+                border: '1px solid var(--color-border)',
+                display: 'flex',
+                flexDirection: 'column',
+              }}
+            >
+              <div
+                style={{
+                  width: 52,
+                  height: 52,
+                  borderRadius: 12,
+                  background: 'rgba(16, 39, 67, 0.1)',
+                  color: 'var(--color-primary-navy)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginBottom: 20,
+                }}
+              >
+                <Shield size={26} />
+              </div>
+
+              <span style={{ fontSize: 12, fontWeight: 700, color: 'var(--color-primary-navy)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+                CLUB MANAGEMENT
+              </span>
+              <h3 style={{ fontSize: 20, fontWeight: 800, color: 'var(--color-primary-navy)', margin: '6px 0 12px' }}>
+                Operations & Analytics
+              </h3>
+              <p style={{ fontSize: 14, color: 'var(--color-text-secondary)', lineHeight: 1.6, marginBottom: 20, flex: 1 }}>
+                Club administrators coordinate campus activities, manage demonstration records, and review illustrative participation reports.
+              </p>
+
+              <Link to="/admin/dashboard" style={{ textDecoration: 'none' }}>
+                <PrimaryButton size="sm" style={{ width: '100%', justifyContent: 'space-between', background: 'var(--color-primary-navy)' }}>
+                  <span>Enter Admin Portal</span>
+                  <ArrowRight size={14} />
+                </PrimaryButton>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ── CTA ── */}
+      {/* ──────────────────────────────────────────────────────────────────────────
+          SECTION 12: DEMO ROLE SELECTION SECTION
+      ────────────────────────────────────────────────────────────────────────── */}
       <section
         style={{
-          padding: '72px 24px',
-          background: 'var(--color-primary)',
-          textAlign: 'center',
+          padding: '80px 24px',
+          background: 'var(--color-bg)',
+          borderBottom: '1px solid var(--color-border)',
         }}
       >
-        <div style={{ maxWidth: 600, margin: '0 auto' }}>
+        <div style={{ maxWidth: 1140, margin: '0 auto' }}>
+          <div
+            className="card"
+            style={{
+              padding: '36px 40px',
+              borderRadius: 20,
+              background: 'linear-gradient(135deg, #102743 0%, #17365D 100%)',
+              color: '#ffffff',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              flexWrap: 'wrap',
+              gap: 24,
+            }}
+          >
+            <div style={{ maxWidth: 640 }}>
+              <span style={{ fontSize: 11, fontWeight: 800, color: '#93C5FD', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+                DIRECTOR PRESENTATION MODE
+              </span>
+              <h3 style={{ fontSize: 24, fontWeight: 800, color: '#ffffff', margin: '8px 0 10px' }}>
+                Ready to Review the Full Platform Experience?
+              </h3>
+              <p style={{ fontSize: 15, color: 'rgba(255,255,255,0.85)', lineHeight: 1.6, margin: 0 }}>
+                Jump directly into Akshat Jain (Student), Dr. Rahul Satyakam (Faculty), or Aarav Mehta (Admin)
+                workflows to test interactive forms, dashboards, and project features.
+              </p>
+            </div>
+
+            <Link to="/demo" style={{ textDecoration: 'none' }}>
+              <PrimaryButton
+                size="lg"
+                style={{
+                  background: '#ffffff',
+                  color: 'var(--color-primary-navy)',
+                  borderColor: '#ffffff',
+                  fontWeight: 700,
+                }}
+                rightIcon={<ArrowRight size={16} />}
+              >
+                Launch Role Selector
+              </PrimaryButton>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ──────────────────────────────────────────────────────────────────────────
+          SECTION 13: FINAL CALL TO ACTION
+      ────────────────────────────────────────────────────────────────────────── */}
+      <section
+        style={{
+          position: 'relative',
+          padding: '120px 24px',
+          backgroundImage: `url(${campusAssets.eveningCta.src})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          textAlign: 'center',
+          overflow: 'hidden',
+        }}
+      >
+        {/* Navy Gradient Overlay */}
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background: 'linear-gradient(180deg, rgba(16, 39, 67, 0.88) 0%, rgba(16, 39, 67, 0.94) 100%)',
+          }}
+        />
+
+        <div style={{ position: 'relative', zIndex: 10, maxWidth: 760, margin: '0 auto' }}>
           <div
             style={{
-              width: 60,
-              height: 60,
-              borderRadius: 16,
-              background: 'rgba(255,255,255,0.15)',
+              width: 56,
+              height: 56,
+              borderRadius: 14,
+              background: 'rgba(255,255,255,0.12)',
+              border: '1px solid rgba(255,255,255,0.2)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              margin: '0 auto 20px',
+              margin: '0 auto 24px',
             }}
           >
-            <Rocket size={28} color="#fff" />
+            <Sparkles size={26} color="#93C5FD" />
           </div>
-          <h2 style={{ fontSize: 30, fontWeight: 800, color: '#fff', marginBottom: 14 }}>
-            Ready to build something great?
+
+          <h2
+            style={{
+              fontSize: 'clamp(32px, 4.5vw, 52px)',
+              fontWeight: 800,
+              color: '#ffffff',
+              marginBottom: 16,
+              letterSpacing: '-0.02em',
+            }}
+          >
+            The Next Big Idea Could Start Here.
           </h2>
-          <p style={{ fontSize: 16, color: 'rgba(255,255,255,0.75)', marginBottom: 32, lineHeight: 1.6 }}>
-            Join hundreds of students who are learning, building, and growing together.
-            Your next big project is one click away.
+
+          <p
+            style={{
+              fontSize: 18,
+              color: 'rgba(255, 255, 255, 0.85)',
+              marginBottom: 40,
+              lineHeight: 1.6,
+              maxWidth: 620,
+              margin: '0 auto 40px',
+            }}
+          >
+            Join a community built around learning, collaboration, mentorship, and innovation at MIT-ADT University.
           </p>
-          <Link to={dashboardPath}>
-            <PrimaryButton
-              size="lg"
-              style={{ background: '#fff', color: 'var(--color-primary)', borderColor: '#fff' }}
-              rightIcon={<ArrowRight size={16} />}
-            >
-              Get Started Now
-            </PrimaryButton>
-          </Link>
+
+          <div style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' }}>
+            <Link to="/projects" style={{ textDecoration: 'none' }}>
+              <PrimaryButton
+                size="lg"
+                style={{ background: '#fff', color: 'var(--color-primary-navy)', borderColor: '#fff', fontWeight: 700 }}
+              >
+                Explore the IT Club
+              </PrimaryButton>
+            </Link>
+
+            <Link to="/demo" style={{ textDecoration: 'none' }}>
+              <SecondaryButton
+                size="lg"
+                style={{
+                  background: 'rgba(255,255,255,0.1)',
+                  borderColor: 'rgba(255,255,255,0.3)',
+                  color: '#ffffff',
+                  fontWeight: 600,
+                }}
+                rightIcon={<ArrowRight size={16} />}
+              >
+                Explore the Platform
+              </SecondaryButton>
+            </Link>
+          </div>
         </div>
       </section>
     </PublicLayout>
-  );
-}
-
-function GhostButton({ children, rightIcon, ...props }: React.ButtonHTMLAttributes<HTMLButtonElement> & { rightIcon?: React.ReactNode }) {
-  return (
-    <button className="btn btn-ghost" {...props} style={{ fontSize: 14, ...props.style }}>
-      {children}
-      {rightIcon}
-    </button>
   );
 }

@@ -1,37 +1,74 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useDemoRole } from '../hooks/useAppContext';
-import { useAppStore } from '../hooks/useAppStore';
-import { GraduationCap, UserCircle2, Shield, ArrowRight, Code2, Zap, Lightbulb, BookOpen } from 'lucide-react';
+import { GraduationCap, UserCircle2, Shield, ArrowRight, Code2, Sparkles, CheckCircle2 } from 'lucide-react';
 import type { Role } from '../types';
+import { getInitials } from '../utils';
 
-const roles: { role: Role; label: string; subtitle: string; icon: React.ReactNode; accentColor: string; path: string; perks: string[] }[] = [
+interface RoleOption {
+  role: Role;
+  name: string;
+  title: string;
+  department: string;
+  description: string;
+  buttonLabel: string;
+  icon: React.ReactNode;
+  accentColor: string;
+  path: string;
+  features: string[];
+}
+
+const roleOptions: RoleOption[] = [
   {
     role: 'student',
-    label: 'Student',
-    subtitle: 'Arjun Sharma · CS Year 3',
+    name: 'Akshat Jain',
+    title: 'Student Innovator & Tech Lead',
+    department: 'Information Technology · Year 3',
+    description: 'Explore projects, submit ideas, connect with teammates, and manage learning activities.',
+    buttonLabel: 'Explore as Student',
     icon: <GraduationCap size={28} />,
     accentColor: '#3678B7',
     path: '/student/dashboard',
-    perks: ['Browse & join projects', 'Submit ideas', 'Track applications', 'Attend events & quizzes'],
+    features: [
+      'Submit and vote on student innovation ideas',
+      'Discover projects and request to join teams',
+      'Connect with teammates with complementary skills',
+      'Track project tasks, milestones, and quizzes',
+    ],
   },
   {
     role: 'faculty',
-    label: 'Faculty / Mentor',
-    subtitle: 'Dr. Meena Iyer · CS Dept.',
+    name: 'Dr. Rahul Satyakam',
+    title: 'Associate Professor & Faculty Mentor',
+    department: 'School of Computing, MIT-ADT University',
+    description: 'Explore how faculty can review student ideas, guide project teams, and monitor progress.',
+    buttonLabel: 'Explore as Faculty',
     icon: <UserCircle2 size={28} />,
-    accentColor: '#22C55E',
+    accentColor: '#17365D',
     path: '/faculty/dashboard',
-    perks: ['Review student ideas', 'Mentor active projects', 'Schedule sessions', 'Post project opportunities'],
+    features: [
+      'Evaluate submitted student ideas and provide guidance',
+      'Monitor mentored project milestones and deliverables',
+      'Schedule collaborative sprint and review sessions',
+      'Recommend promising projects for Crieya incubation',
+    ],
   },
   {
     role: 'admin',
-    label: 'Club Admin',
-    subtitle: 'Aditya Kumar · IT Club Admin',
+    name: 'Aarav Mehta',
+    title: 'Club Coordinator & Platform Admin',
+    department: 'IT Club Administration, MIT-ADT University',
+    description: 'Explore member management, club activities, illustrative analytics, and announcements.',
+    buttonLabel: 'Explore as Admin',
     icon: <Shield size={28} />,
-    accentColor: '#8B5CF6',
+    accentColor: '#102743',
     path: '/admin/dashboard',
-    perks: ['Manage members', 'Analytics & reports', 'Create announcements', 'Oversee all activity'],
+    features: [
+      'Oversee club member directories and applications',
+      'Organize campus hackathons, talks, and workshops',
+      'Publish university club announcements and alerts',
+      'Review participation metrics and innovation reports',
+    ],
   },
 ];
 
@@ -47,99 +84,251 @@ export function DemoEntryPage() {
         flexDirection: 'column',
       }}
     >
-      {/* Header */}
-      <header style={{ background: 'var(--color-primary)', padding: '0 24px' }}>
-        <div style={{ maxWidth: 1000, margin: '0 auto', height: 60, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      {/* Top Header */}
+      <header
+        style={{
+          background: 'var(--color-primary-navy)',
+          padding: '0 24px',
+          borderBottom: '1px solid rgba(255,255,255,0.08)',
+        }}
+      >
+        <div
+          style={{
+            maxWidth: 1140,
+            margin: '0 auto',
+            height: 64,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}
+        >
           <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
-            <div style={{ width: 34, height: 34, borderRadius: 9, background: 'rgba(255,255,255,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Code2 size={18} color="#fff" />
+            <div
+              style={{
+                width: 36,
+                height: 36,
+                borderRadius: 9,
+                background: 'rgba(255,255,255,0.15)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <Code2 size={20} color="#fff" />
             </div>
-            <span style={{ fontWeight: 700, color: '#fff', fontSize: 15 }}>IT Club & Innovation Hub</span>
+            <div>
+              <span style={{ fontWeight: 800, color: '#fff', fontSize: 15, display: 'block' }}>
+                IT Club & Innovation Hub
+              </span>
+              <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.65)' }}>
+                MIT-ADT University · Rajbaug Campus
+              </span>
+            </div>
           </Link>
-          <Link to="/" style={{ fontSize: 13, color: 'rgba(255,255,255,0.7)', textDecoration: 'none' }}>
-            ← Back to Public Site
+
+          <Link
+            to="/"
+            style={{
+              fontSize: 13,
+              color: 'rgba(255,255,255,0.8)',
+              textDecoration: 'none',
+              fontWeight: 500,
+            }}
+          >
+            ← Back to Homepage
           </Link>
         </div>
       </header>
 
-      {/* Demo Banner */}
-      <div style={{ background: '#FFFBEB', borderBottom: '1px solid #FDE68A', padding: '8px 24px', textAlign: 'center' }}>
-        <p style={{ fontSize: 13, color: '#92400E', fontWeight: 500 }}>
-          🎭 <strong>Demo Mode</strong> — This is a visual prototype for presentation purposes. No real authentication is required.
+      {/* Subtle Demo Prototype Disclaimer Banner */}
+      <div
+        style={{
+          background: '#FEF3C7',
+          borderBottom: '1px solid #FDE68A',
+          padding: '10px 24px',
+          textAlign: 'center',
+        }}
+      >
+        <p style={{ fontSize: 13, color: '#92400E', fontWeight: 500, margin: 0 }}>
+          💡 <strong>Interactive Presentation Prototype:</strong> This interface demonstrates the student,
+          faculty, and administrator portals for college director review. No actual login credentials required.
         </p>
       </div>
 
-      {/* Hero */}
-      <div style={{ maxWidth: 1000, margin: '0 auto', padding: '48px 24px 0', textAlign: 'center' }}>
-        <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '4px 14px', background: 'var(--color-accent-light)', borderRadius: 99, marginBottom: 20 }}>
-          <Zap size={13} style={{ color: 'var(--color-accent)' }} />
-          <span style={{ fontSize: 12, fontWeight: 600, color: 'var(--color-accent)' }}>Select a role to explore</span>
-        </div>
-        <h1 style={{ fontSize: 32, fontWeight: 800, color: 'var(--color-primary)', marginBottom: 12 }}>
-          Explore the Platform as...
-        </h1>
-        <p style={{ fontSize: 16, color: 'var(--color-text-secondary)', maxWidth: 520, margin: '0 auto 40px', lineHeight: 1.6 }}>
-          Choose a role below to see the full dashboard experience. You can switch roles at any time using the Demo button in the bottom-left corner.
-        </p>
+      {/* Main Content */}
+      <div style={{ maxWidth: 1140, margin: '0 auto', padding: '48px 24px 64px', width: '100%' }}>
+        <div style={{ textAlign: 'center', marginBottom: 44 }}>
+          <div
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 8,
+              padding: '6px 16px',
+              background: 'var(--color-accent-light)',
+              borderRadius: 99,
+              marginBottom: 16,
+              border: '1px solid #D0E4F7',
+            }}
+          >
+            <Sparkles size={14} style={{ color: 'var(--color-accent)' }} />
+            <span style={{ fontSize: 12, fontWeight: 700, color: 'var(--color-accent)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+              Select a Persona to Explore
+            </span>
+          </div>
 
-        {/* Role Cards */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 20, marginBottom: 48 }}>
-          {roles.map((r) => {
-            const isActive = currentRole === r.role;
+          <h1
+            style={{
+              fontSize: 'clamp(28px, 4vw, 40px)',
+              fontWeight: 800,
+              color: 'var(--color-primary-navy)',
+              marginBottom: 12,
+              letterSpacing: '-0.02em',
+            }}
+          >
+            Choose Your Platform Perspective
+          </h1>
+          <p
+            style={{
+              fontSize: 16,
+              color: 'var(--color-text-secondary)',
+              maxWidth: 620,
+              margin: '0 auto',
+              lineHeight: 1.6,
+            }}
+          >
+            Select any of the three demonstration profiles below to experience how students, faculty mentors,
+            and club coordinators collaborate within the Innovation Hub.
+          </p>
+        </div>
+
+        {/* 3 Distinct Role Cards */}
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+            gap: 24,
+            marginBottom: 40,
+          }}
+        >
+          {roleOptions.map((opt) => {
+            const isActive = currentRole === opt.role;
+
             return (
               <div
-                key={r.role}
+                key={opt.role}
+                className="card"
                 style={{
-                  background: 'var(--color-surface)',
-                  border: `2px solid ${isActive ? r.accentColor : 'var(--color-border)'}`,
-                  borderRadius: 16,
-                  padding: 24,
-                  textAlign: 'left',
+                  border: `2px solid ${isActive ? 'var(--color-accent)' : 'var(--color-border)'}`,
+                  borderRadius: 18,
+                  padding: 28,
+                  display: 'flex',
+                  flexDirection: 'column',
                   position: 'relative',
+                  boxShadow: isActive ? '0 12px 32px rgba(54, 120, 183, 0.16)' : 'var(--shadow-card)',
                   transition: 'all 0.2s ease',
-                  boxShadow: isActive ? `0 0 0 4px ${r.accentColor}22` : 'none',
+                  background: 'var(--color-surface)',
                 }}
               >
                 {isActive && (
-                  <div style={{ position: 'absolute', top: 12, right: 12, background: r.accentColor, color: '#fff', fontSize: 10, fontWeight: 700, padding: '3px 10px', borderRadius: 99 }}>
-                    ACTIVE
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: 16,
+                      right: 16,
+                      background: 'var(--color-accent)',
+                      color: '#fff',
+                      fontSize: 11,
+                      fontWeight: 700,
+                      padding: '4px 10px',
+                      borderRadius: 99,
+                      letterSpacing: '0.05em',
+                    }}
+                  >
+                    CURRENT ACTIVE ROLE
                   </div>
                 )}
-                <div style={{ width: 52, height: 52, borderRadius: 14, background: `${r.accentColor}18`, display: 'flex', alignItems: 'center', justifyContent: 'center', color: r.accentColor, marginBottom: 16 }}>
-                  {r.icon}
+
+                {/* Profile Avatar & Title */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 20 }}>
+                  <div
+                    style={{
+                      width: 58,
+                      height: 58,
+                      borderRadius: 14,
+                      background: 'linear-gradient(135deg, #102743 0%, #17365D 100%)',
+                      color: '#ffffff',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: 20,
+                      fontWeight: 800,
+                      flexShrink: 0,
+                      border: '2px solid rgba(255,255,255,0.15)',
+                      boxShadow: '0 4px 12px rgba(16,39,67,0.15)',
+                    }}
+                  >
+                    {getInitials(opt.name)}
+                  </div>
+                  <div>
+                    <h2 style={{ fontSize: 20, fontWeight: 800, color: 'var(--color-primary-navy)', marginBottom: 2 }}>
+                      {opt.name}
+                    </h2>
+                    <p style={{ fontSize: 13, fontWeight: 600, color: 'var(--color-accent)', margin: 0 }}>
+                      {opt.title}
+                    </p>
+                    <p style={{ fontSize: 12, color: 'var(--color-text-secondary)', margin: 0, marginTop: 2 }}>
+                      {opt.department}
+                    </p>
+                  </div>
                 </div>
-                <h2 style={{ fontSize: 20, fontWeight: 700, color: 'var(--color-text)', marginBottom: 4 }}>{r.label}</h2>
-                <p style={{ fontSize: 13, color: 'var(--color-text-secondary)', marginBottom: 16 }}>{r.subtitle}</p>
-                <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 20px', display: 'flex', flexDirection: 'column', gap: 6 }}>
-                  {r.perks.map((perk) => (
-                    <li key={perk} style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: 'var(--color-text)' }}>
-                      <span style={{ width: 6, height: 6, borderRadius: '50%', background: r.accentColor, flexShrink: 0 }} />
-                      {perk}
-                    </li>
-                  ))}
-                </ul>
-                <Link to={r.path} onClick={() => switchRole(r.role)}>
+
+                {/* Description */}
+                <p
+                  style={{
+                    fontSize: 14,
+                    color: 'var(--color-text)',
+                    lineHeight: 1.6,
+                    marginBottom: 20,
+                    minHeight: 44,
+                  }}
+                >
+                  {opt.description}
+                </p>
+
+                {/* Feature Checklist */}
+                <div style={{ borderTop: '1px solid var(--color-border)', paddingTop: 16, marginBottom: 24, flex: 1 }}>
+                  <p style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--color-text-secondary)', marginBottom: 10 }}>
+                    What You Can Explore:
+                  </p>
+                  <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 8 }}>
+                    {opt.features.map((feat, i) => (
+                      <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 8, fontSize: 13, color: 'var(--color-text)', lineHeight: 1.45 }}>
+                        <CheckCircle2 size={15} color="var(--color-accent)" style={{ flexShrink: 0, marginTop: 2 }} />
+                        <span>{feat}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Action CTA */}
+                <Link to={opt.path} onClick={() => switchRole(opt.role)} style={{ textDecoration: 'none' }}>
                   <button
+                    className={isActive ? 'btn btn-primary' : 'btn btn-secondary'}
                     style={{
                       width: '100%',
-                      padding: '10px 20px',
-                      background: isActive ? r.accentColor : 'transparent',
-                      color: isActive ? '#fff' : r.accentColor,
-                      border: `1.5px solid ${r.accentColor}`,
-                      borderRadius: 10,
+                      padding: '12px 20px',
                       fontSize: 14,
-                      fontWeight: 600,
-                      cursor: 'pointer',
+                      fontWeight: 700,
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
                       gap: 8,
-                      transition: 'all 0.15s ease',
-                      fontFamily: 'inherit',
+                      borderRadius: 10,
+                      borderColor: isActive ? 'var(--color-primary-navy)' : 'var(--color-border)',
                     }}
                   >
-                    {isActive ? 'Go to Dashboard' : `Enter as ${r.label}`}
-                    <ArrowRight size={15} />
+                    <span>{opt.buttonLabel}</span>
+                    <ArrowRight size={16} />
                   </button>
                 </Link>
               </div>
@@ -147,40 +336,35 @@ export function DemoEntryPage() {
           })}
         </div>
 
-        {/* Quick Links */}
-        <div style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)', borderRadius: 16, padding: 24, marginBottom: 48 }}>
-          <h3 style={{ fontSize: 15, fontWeight: 700, color: 'var(--color-text)', marginBottom: 16, textAlign: 'left' }}>Quick Preview Links</h3>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 10 }}>
-            {[
-              { to: '/projects', label: 'Browse Projects', icon: <Code2 size={14} /> },
-              { to: '/ideas/submit', label: 'Submit an Idea', icon: <Lightbulb size={14} /> },
-              { to: '/workflow', label: 'Idea-to-Project Workflow', icon: <Zap size={14} /> },
-              { to: '/learn', label: 'Knowledge Hub', icon: <BookOpen size={14} /> },
-              { to: '/incubation', label: 'Crieya Incubation Corner', icon: <ArrowRight size={14} /> },
-            ].map((link) => (
-              <Link
-                key={link.to}
-                to={link.to}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 8,
-                  padding: '10px 14px',
-                  background: 'var(--color-bg)',
-                  border: '1px solid var(--color-border)',
-                  borderRadius: 10,
-                  fontSize: 13,
-                  color: 'var(--color-text)',
-                  textDecoration: 'none',
-                  fontWeight: 500,
-                  transition: 'all 0.15s ease',
-                }}
-              >
-                <span style={{ color: 'var(--color-accent)' }}>{link.icon}</span>
-                {link.label}
-              </Link>
-            ))}
+        {/* Presentation Help Note */}
+        <div
+          className="card"
+          style={{
+            padding: '18px 24px',
+            background: 'var(--color-surface)',
+            border: '1px solid var(--color-border)',
+            borderRadius: 14,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            flexWrap: 'wrap',
+            gap: 16,
+          }}
+        >
+          <div>
+            <p style={{ fontSize: 14, fontWeight: 700, color: 'var(--color-primary-navy)', marginBottom: 2 }}>
+              Presenting on Projector or Large Screen?
+            </p>
+            <p style={{ fontSize: 13, color: 'var(--color-text-secondary)', margin: 0 }}>
+              Use the floating <strong>Demo Switcher</strong> at the bottom-left of the screen at any moment to jump
+              seamlessly between Student, Faculty, and Admin dashboards without leaving your workflow.
+            </p>
           </div>
+          <Link to="/">
+            <button className="btn btn-ghost btn-sm" style={{ fontWeight: 600 }}>
+              Return to Homepage
+            </button>
+          </Link>
         </div>
       </div>
     </div>
