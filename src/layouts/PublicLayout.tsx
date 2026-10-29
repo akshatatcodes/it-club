@@ -25,7 +25,7 @@ export function PublicLayout({ children }: { children: React.ReactNode }) {
             maxWidth: 1240,
             margin: '0 auto',
             padding: '0 24px',
-            height: 72,
+            height: 76,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
@@ -38,7 +38,7 @@ export function PublicLayout({ children }: { children: React.ReactNode }) {
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: 12,
+              gap: 14,
               textDecoration: 'none',
               flexShrink: 0,
             }}
@@ -47,26 +47,26 @@ export function PublicLayout({ children }: { children: React.ReactNode }) {
               src="/images/mit_adt_logo.png"
               alt="MIT-ADT University Logo"
               style={{
-                height: 46,
+                height: 58,
                 width: 'auto',
                 objectFit: 'contain',
                 display: 'block',
               }}
             />
-            <div>
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
               <span
                 style={{
                   fontWeight: 800,
-                  fontSize: 18,
+                  fontSize: 19,
                   color: 'var(--color-primary-navy)',
                   letterSpacing: '-0.02em',
-                  lineHeight: 1.1,
+                  lineHeight: 1.15,
                   display: 'block',
                 }}
               >
                 IT CLUB
               </span>
-              <span className="header-brand-subtitle" style={{ fontSize: 11, color: 'var(--color-text-secondary)', fontWeight: 600, display: 'block', marginTop: 2 }}>
+              <span className="header-brand-subtitle" style={{ fontSize: 11.5, color: 'var(--color-text-secondary)', fontWeight: 600, display: 'block', marginTop: 2 }}>
                 MIT College of Management and Computer Application
               </span>
             </div>
