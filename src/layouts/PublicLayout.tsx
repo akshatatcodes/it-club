@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { Menu, X, Code2, Sparkles } from 'lucide-react';
+import { Menu, X, Sparkles } from 'lucide-react';
 
 
 const navLinks = [
@@ -43,22 +43,16 @@ export function PublicLayout({ children }: { children: React.ReactNode }) {
               flexShrink: 0,
             }}
           >
-            <div
+            <img
+              src="/images/mit_adt_logo.png"
+              alt="MIT-ADT University Logo"
               style={{
-                width: 44,
-                height: 44,
-                borderRadius: 12,
-                background: 'linear-gradient(135deg, #0a192f 0%, #17365D 100%)',
-                border: '1.5px solid rgba(56, 189, 248, 0.4)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: '#38BDF8',
-                boxShadow: '0 4px 12px rgba(16, 39, 67, 0.25), 0 0 16px rgba(56, 189, 248, 0.15)',
+                height: 46,
+                width: 'auto',
+                objectFit: 'contain',
+                display: 'block',
               }}
-            >
-              <Code2 size={24} />
-            </div>
+            />
             <div>
               <span
                 style={{
@@ -229,20 +223,23 @@ export function PublicLayout({ children }: { children: React.ReactNode }) {
         >
           {/* Identity & Campus Context */}
           <div style={{ maxWidth: 320 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 14 }}>
               <div
                 style={{
-                  width: 38,
-                  height: 38,
-                  borderRadius: 10,
-                  background: 'linear-gradient(135deg, rgba(56, 189, 248, 0.25) 0%, rgba(37, 99, 235, 0.3) 100%)',
-                  border: '1px solid rgba(56, 189, 248, 0.4)',
+                  background: '#ffffff',
+                  padding: '3px 8px',
+                  borderRadius: 8,
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
+                  flexShrink: 0,
                 }}
               >
-                <Code2 size={22} color="#38BDF8" />
+                <img
+                  src="/images/mit_adt_logo.png"
+                  alt="MIT-ADT University"
+                  style={{ height: 32, width: 'auto', objectFit: 'contain', display: 'block' }}
+                />
               </div>
               <div>
                 <span style={{ fontWeight: 800, color: '#fff', fontSize: 16, display: 'block' }}>
