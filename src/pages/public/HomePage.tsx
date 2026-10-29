@@ -137,33 +137,35 @@ export function HomePage() {
   return (
     <PublicLayout>
       {/* ──────────────────────────────────────────────────────────────────────────
-          SECTION 1: CINEMATIC CAMPUS HERO
+          SECTION 1: HIGH-ENERGY MITCOM TECH HERO (RESPONSIVE & CLEAN)
       ────────────────────────────────────────────────────────────────────────── */}
       <section
+        className="hero-section"
         style={{
           position: 'relative',
-          minHeight: '84vh',
+          minHeight: '88vh',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           backgroundImage: `url(${campusAssets.hero.src})`,
           backgroundSize: 'cover',
-          backgroundPosition: 'center 40%',
+          backgroundPosition: 'center 14%',
           overflow: 'hidden',
-          padding: '100px 24px 80px',
         }}
       >
-        {/* Navy Cinematic Backdrop Gradient */}
-        <div className="hero-overlay" style={{ position: 'absolute', inset: 0 }} />
+        {/* Smooth Clean Cinematic Backdrop Overlay */}
+        <div className="hero-overlay" style={{ position: 'absolute', inset: 0, zIndex: 1 }} />
 
-        {/* Subtle Ambient Radial Lighting */}
-        <div className="hero-subtle-glow" />
+        {/* Ambient Cyan & Indigo Glows */}
+        <div className="hero-subtle-glow" style={{ zIndex: 2 }} />
+        <div className="hero-glow-secondary" style={{ zIndex: 2 }} />
 
         <div
           style={{
             position: 'relative',
             zIndex: 10,
-            maxWidth: 960,
+            maxWidth: 1060,
+            width: '100%',
             margin: '0 auto',
             textAlign: 'center',
             display: 'flex',
@@ -171,61 +173,35 @@ export function HomePage() {
             alignItems: 'center',
           }}
         >
-          {/* Eyebrow Badge */}
-          <div className="eyebrow-badge" style={{ marginBottom: 24 }}>
-            <Building2 size={14} color="#93C5FD" />
-            <span>MIT-ADT UNIVERSITY · RAJBAUG CAMPUS</span>
-          </div>
-
           {/* Main Headline */}
-          <h1
-            style={{
-              fontSize: 'clamp(36px, 5.5vw, 64px)',
-              fontWeight: 800,
-              color: '#ffffff',
-              lineHeight: 1.15,
-              marginBottom: 24,
-              letterSpacing: '-0.03em',
-              textShadow: '0 2px 20px rgba(0,0,0,0.4)',
-            }}
-          >
-            Where Campus Ideas Become <br />
-            <span style={{ color: '#93C5FD', display: 'inline-block' }}>
-              Tomorrow's Innovations.
+          <h1 className="hero-title">
+            Where Code Meets Leadership. <br />
+            <span className="text-gradient-cyan" style={{ display: 'inline-block' }}>
+              MITCOM IT Club & Innovation Hub
             </span>
           </h1>
 
-          {/* Supporting Copy */}
-          <p
-            style={{
-              fontSize: 'clamp(16px, 2vw, 19px)',
-              color: 'rgba(255, 255, 255, 0.88)',
-              lineHeight: 1.65,
-              maxWidth: 720,
-              margin: '0 auto 40px',
-              fontWeight: 400,
-            }}
-          >
-            A collaborative space for students and faculty to explore technology, build meaningful projects,
-            learn together, and transform promising ideas into real-world solutions.
+          {/* Supporting Copy explicitly stating MITCOM and Department of Computer Applications */}
+          <p className="hero-description" style={{ marginBottom: 36 }}>
+            The official student-faculty technology club of <strong style={{ color: '#ffffff' }}>MIT College of Management (MITCOM)</strong>, <strong style={{ color: '#93C5FD' }}>Department of Computer Applications</strong> at MIT-ADT University, Pune. Empowering BCA & MCA innovators to architect production-grade software, win national hackathons, and launch pre-incubated ventures under faculty mentorship.
           </p>
 
-          {/* Two Strong Calls to Action */}
-          <div style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap', marginBottom: 56 }}>
+          {/* Action CTAs */}
+          <div className="hero-cta-group">
             <Link to="/demo" style={{ textDecoration: 'none' }}>
               <PrimaryButton
                 size="lg"
                 style={{
-                  background: '#ffffff',
-                  color: 'var(--color-primary-navy)',
-                  borderColor: '#ffffff',
+                  background: 'linear-gradient(135deg, #38BDF8 0%, #2563EB 100%)',
+                  color: '#ffffff',
+                  borderColor: '#38BDF8',
                   fontWeight: 700,
-                  boxShadow: '0 8px 24px rgba(0,0,0,0.25)',
-                  padding: '14px 28px',
+                  boxShadow: '0 8px 24px rgba(37, 99, 235, 0.4), 0 0 16px rgba(56, 189, 248, 0.3)',
+                  padding: '14px 30px',
                 }}
                 rightIcon={<ArrowRight size={18} />}
               >
-                Explore the Innovation Hub
+                Explore Innovation Hub
               </PrimaryButton>
             </Link>
 
@@ -237,13 +213,60 @@ export function HomePage() {
                   borderColor: 'rgba(255, 255, 255, 0.35)',
                   color: '#ffffff',
                   fontWeight: 600,
-                  backdropFilter: 'blur(8px)',
+                  backdropFilter: 'blur(10px)',
                   padding: '14px 28px',
                 }}
               >
                 Discover the IT Club
               </SecondaryButton>
             </a>
+          </div>
+
+          {/* 4 Interactive High-Tech Glass Stat Cards */}
+          <div className="hero-stat-grid">
+            <div className="glass-stat-card">
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 6 }}>
+                <div style={{ padding: 6, borderRadius: 8, background: 'rgba(56, 189, 248, 0.2)' }}>
+                  <Users size={18} color="#38BDF8" />
+                </div>
+                <span style={{ fontSize: 22, fontWeight: 800, color: '#ffffff' }}>500+</span>
+              </div>
+              <div style={{ fontSize: 13, fontWeight: 700, color: '#93C5FD' }}>BCA & MCA Members</div>
+              <div style={{ fontSize: 11, color: 'rgba(255, 255, 255, 0.65)' }}>Active student tech community</div>
+            </div>
+
+            <div className="glass-stat-card">
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 6 }}>
+                <div style={{ padding: 6, borderRadius: 8, background: 'rgba(34, 197, 94, 0.2)' }}>
+                  <Code2 size={18} color="#4ADE80" />
+                </div>
+                <span style={{ fontSize: 22, fontWeight: 800, color: '#ffffff' }}>40+</span>
+              </div>
+              <div style={{ fontSize: 13, fontWeight: 700, color: '#86EFAC' }}>Live Deployments</div>
+              <div style={{ fontSize: 11, color: 'rgba(255, 255, 255, 0.65)' }}>Full-stack web, AI & mobile apps</div>
+            </div>
+
+            <div className="glass-stat-card">
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 6 }}>
+                <div style={{ padding: 6, borderRadius: 8, background: 'rgba(245, 158, 11, 0.2)' }}>
+                  <Trophy size={18} color="#FBBF24" />
+                </div>
+                <span style={{ fontSize: 22, fontWeight: 800, color: '#ffffff' }}>15+</span>
+              </div>
+              <div style={{ fontSize: 13, fontWeight: 700, color: '#FDE68A' }}>Hackathons & Quizzes</div>
+              <div style={{ fontSize: 11, color: 'rgba(255, 255, 255, 0.65)' }}>State & national tech awards</div>
+            </div>
+
+            <div className="glass-stat-card">
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 6 }}>
+                <div style={{ padding: 6, borderRadius: 8, background: 'rgba(139, 92, 246, 0.2)' }}>
+                  <Rocket size={18} color="#C084FC" />
+                </div>
+                <span style={{ fontSize: 22, fontWeight: 800, color: '#ffffff' }}>Crieya</span>
+              </div>
+              <div style={{ fontSize: 13, fontWeight: 700, color: '#E9D5FF' }}>Pre-Incubation</div>
+              <div style={{ fontSize: 11, color: 'rgba(255, 255, 255, 0.65)' }}>Campus venture accelerator pathway</div>
+            </div>
           </div>
 
           {/* Scroll Down Visual Cue */}
@@ -260,7 +283,7 @@ export function HomePage() {
               transition: 'color 0.2s ease',
             }}
           >
-            <span>DISCOVER THE VISION</span>
+            <span style={{ letterSpacing: '0.08em', fontWeight: 600 }}>DISCOVER MITCOM VISION</span>
             <ChevronDown size={18} style={{ animation: 'floatGentle 2s infinite ease-in-out' }} />
           </a>
         </div>
@@ -277,104 +300,349 @@ export function HomePage() {
           borderBottom: '1px solid var(--color-border)',
         }}
       >
-        <div
-          style={{
-            maxWidth: 1240,
-            margin: '0 auto',
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
-            gap: 48,
-            alignItems: 'center',
-          }}
-        >
-          {/* Left Column: Vision Context */}
-          <div>
-            <span className="section-eyebrow">A UNIVERSITY INITIATIVE</span>
-            <h2
-              style={{
-                fontSize: 'clamp(30px, 3.8vw, 44px)',
-                fontWeight: 800,
-                color: 'var(--color-primary-navy)',
-                lineHeight: 1.2,
-                marginBottom: 20,
-              }}
-            >
-              More Than a Club. <br />
-              <span style={{ color: 'var(--color-accent)' }}>A Space to Build.</span>
-            </h2>
+        <div style={{ maxWidth: 1240, margin: '0 auto' }}>
+          {/* Top 2-Column Overview */}
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
+              gap: 48,
+              alignItems: 'center',
+            }}
+          >
+            {/* Left Column: Vision Context */}
+            <div>
+              <span className="section-eyebrow">MITCOM · DEPARTMENT OF COMPUTER APPLICATIONS</span>
+              <h2
+                style={{
+                  fontSize: 'clamp(30px, 3.8vw, 44px)',
+                  fontWeight: 800,
+                  color: 'var(--color-primary-navy)',
+                  lineHeight: 1.2,
+                  marginBottom: 20,
+                }}
+              >
+                Fostering Next-Gen Tech Leaders <br />
+                <span style={{ color: 'var(--color-accent)' }}>at MIT College of Management.</span>
+              </h2>
 
-            <p
-              style={{
-                fontSize: 17,
-                color: 'var(--color-text)',
-                lineHeight: 1.7,
-                marginBottom: 20,
-                fontWeight: 400,
-              }}
-            >
-              The IT Club & Innovation Hub is envisioned as a collaborative environment where curiosity
-              becomes capability, students discover their strengths, and ideas grow through teamwork and
-              faculty mentorship.
-            </p>
+              <p
+                style={{
+                  fontSize: 17,
+                  color: 'var(--color-text)',
+                  lineHeight: 1.7,
+                  marginBottom: 20,
+                  fontWeight: 400,
+                }}
+              >
+                The <strong>MITCOM IT Club & Innovation Hub</strong> is established under the <strong>Department of Computer Applications</strong> at <strong>MIT-ADT University, Pune</strong>. It serves as a specialized high-impact incubator where BCA and MCA scholars turn theoretical computer science into production software systems.
+              </p>
 
-            <p
-              style={{
-                fontSize: 15,
-                color: 'var(--color-text-secondary)',
-                lineHeight: 1.7,
-                marginBottom: 32,
-              }}
-            >
-              Rather than keeping classroom learning in isolation, this platform provides a structured,
-              supportive framework where students across Information Technology, Computer Science, and Design
-              collaborate side-by-side on projects that solve genuine campus and community challenges.
-            </p>
+              <p
+                style={{
+                  fontSize: 15,
+                  color: 'var(--color-text-secondary)',
+                  lineHeight: 1.7,
+                  marginBottom: 32,
+                }}
+              >
+                Rather than keeping classroom learning in isolation, this platform provides a structured, supportive framework where students across Computer Applications collaborate side-by-side on projects that solve genuine campus challenges, engage in hackathons, publish technical research, and prepare for Crieya pre-incubation.
+              </p>
 
-            <div style={{ display: 'flex', gap: 16, alignItems: 'center', flexWrap: 'wrap' }}>
-              <Link to="/demo" style={{ textDecoration: 'none' }}>
-                <PrimaryButton size="md" rightIcon={<ArrowRight size={16} />}>
-                  Discover the Platform
-                </PrimaryButton>
-              </Link>
-              <Link to="/workflow" style={{ textDecoration: 'none' }}>
-                <SecondaryButton size="md">View 7-Step Workflow</SecondaryButton>
-              </Link>
+              <div style={{ display: 'flex', gap: 16, alignItems: 'center', flexWrap: 'wrap' }}>
+                <Link to="/demo" style={{ textDecoration: 'none' }}>
+                  <PrimaryButton size="md" rightIcon={<ArrowRight size={16} />}>
+                    Discover the Platform
+                  </PrimaryButton>
+                </Link>
+                <Link to="/workflow" style={{ textDecoration: 'none' }}>
+                  <SecondaryButton size="md">View 7-Step Workflow</SecondaryButton>
+                </Link>
+              </div>
+            </div>
+
+            {/* Right Column: High Quality Photographic Composition */}
+            <div className="img-zoom-container" style={{ borderRadius: 20, boxShadow: 'var(--shadow-elevated)', overflow: 'hidden' }}>
+              <img
+                src={campusAssets.visionCollab.src}
+                alt={campusAssets.visionCollab.alt}
+                className="img-zoom"
+                style={{
+                  width: '100%',
+                  height: 460,
+                  objectFit: 'cover',
+                  display: 'block',
+                  borderRadius: 20,
+                }}
+              />
             </div>
           </div>
 
-          {/* Right Column: High Quality Photographic Composition */}
-          <div className="img-zoom-container" style={{ borderRadius: 20, boxShadow: 'var(--shadow-elevated)' }}>
-            <img
-              src={campusAssets.visionCollab.src}
-              alt={campusAssets.visionCollab.alt}
-              className="img-zoom"
-              style={{
-                width: '100%',
-                height: 440,
-                objectFit: 'cover',
-                display: 'block',
-                borderRadius: 20,
-              }}
-            />
+          {/* Institutional Breakdown: MITCOM, Dept of Computer Applications, & IT Club */}
+          <div style={{ marginTop: 72, paddingTop: 52, borderTop: '1px solid var(--color-border)' }}>
+            <div style={{ textAlign: 'center', maxWidth: 760, margin: '0 auto 44px' }}>
+              <span className="section-eyebrow">INSTITUTIONAL FOUNDATION · MIT-ADT UNIVERSITY</span>
+              <h3
+                style={{
+                  fontSize: 'clamp(24px, 3vw, 36px)',
+                  fontWeight: 800,
+                  color: 'var(--color-primary-navy)',
+                  marginBottom: 12,
+                }}
+              >
+                About MITCOM & The IT Club
+              </h3>
+              <p style={{ fontSize: 15, color: 'var(--color-text-secondary)', lineHeight: 1.65 }}>
+                Rooted in the prestigious academic ecosystem of MIT Art, Design and Technology University, Pune, combining industry-aligned computer application programs with a high-impact student technology society.
+              </p>
+            </div>
+
+            {/* 3 Comprehensive Cards */}
             <div
               style={{
-                position: 'absolute',
-                bottom: 0,
-                left: 0,
-                right: 0,
-                padding: '24px',
-                background: 'linear-gradient(180deg, transparent 0%, rgba(16, 39, 67, 0.85) 100%)',
-                color: '#fff',
-                borderBottomLeftRadius: 20,
-                borderBottomRightRadius: 20,
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+                gap: 28,
               }}
             >
-              <p style={{ fontSize: 13, fontWeight: 700, letterSpacing: '0.04em', textTransform: 'uppercase', color: '#93C5FD' }}>
-                Collaborative Student Computing Lab
-              </p>
-              <p style={{ fontSize: 14, opacity: 0.9, margin: 0 }}>
-                Structured peer sessions turn individual questions into team-driven solutions.
-              </p>
+              {/* Card 1: MITCOM */}
+              <div
+                className="card card-hover"
+                style={{
+                  background: 'var(--color-surface)',
+                  borderRadius: 18,
+                  padding: 32,
+                  border: '1px solid var(--color-border)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  boxShadow: 'var(--shadow-card)',
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
+                  <span
+                    style={{
+                      fontSize: 11,
+                      fontWeight: 800,
+                      background: 'rgba(56, 189, 248, 0.12)',
+                      color: '#0284C7',
+                      padding: '4px 10px',
+                      borderRadius: 6,
+                      letterSpacing: '0.04em',
+                    }}
+                  >
+                    ESTD. 2007 · MIT-ADT
+                  </span>
+                  <div style={{ width: 36, height: 36, borderRadius: 10, background: 'var(--color-accent-light)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-accent)' }}>
+                    <Building2 size={20} />
+                  </div>
+                </div>
+
+                <h4 style={{ fontSize: 20, fontWeight: 800, color: 'var(--color-primary-navy)', marginBottom: 12 }}>
+                  MIT College of Management
+                </h4>
+                <p style={{ fontSize: 14, color: 'var(--color-text-secondary)', lineHeight: 1.7, marginBottom: 20 }}>
+                  Founded in 2007 on the scenic 125-acre Rajbaug Campus in Pune, MITCOM is a flagship constituent institute of MIT-ADT University. It is dedicated to delivering practice-based education blending managerial leadership, case-study pedagogy, and technological innovation.
+                </p>
+
+                <div style={{ marginTop: 'auto', borderTop: '1px solid var(--color-border)', paddingTop: 16, display: 'flex', flexDirection: 'column', gap: 10 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 13, color: 'var(--color-text)' }}>
+                    <CheckCircle2 size={16} color="var(--color-accent)" style={{ flexShrink: 0 }} />
+                    <span>Lush 125-acre green Rajbaug University Campus</span>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 13, color: 'var(--color-text)' }}>
+                    <CheckCircle2 size={16} color="var(--color-accent)" style={{ flexShrink: 0 }} />
+                    <span>Central Digital Library (EBSCO, DELNET, J-Gate)</span>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 13, color: 'var(--color-text)' }}>
+                    <CheckCircle2 size={16} color="var(--color-accent)" style={{ flexShrink: 0 }} />
+                    <span>Smart air-conditioned ICT classrooms & seminar halls</span>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 13, color: 'var(--color-text)' }}>
+                    <CheckCircle2 size={16} color="var(--color-accent)" style={{ flexShrink: 0 }} />
+                    <span>Dedicated corporate placement & industry interface cell</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Card 2: Department of Computer Applications */}
+              <div
+                className="card card-hover"
+                style={{
+                  background: 'var(--color-surface)',
+                  borderRadius: 18,
+                  padding: 32,
+                  border: '1px solid var(--color-border)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  boxShadow: 'var(--shadow-card)',
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
+                  <span
+                    style={{
+                      fontSize: 11,
+                      fontWeight: 800,
+                      background: 'rgba(34, 197, 94, 0.12)',
+                      color: '#16A34A',
+                      padding: '4px 10px',
+                      borderRadius: 6,
+                      letterSpacing: '0.04em',
+                    }}
+                  >
+                    BCA & MCA DEGREES
+                  </span>
+                  <div style={{ width: 36, height: 36, borderRadius: 10, background: 'rgba(34, 197, 94, 0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#16A34A' }}>
+                    <GraduationCap size={20} />
+                  </div>
+                </div>
+
+                <h4 style={{ fontSize: 20, fontWeight: 800, color: 'var(--color-primary-navy)', marginBottom: 12 }}>
+                  Dept. of Computer Applications
+                </h4>
+                <p style={{ fontSize: 14, color: 'var(--color-text-secondary)', lineHeight: 1.7, marginBottom: 20 }}>
+                  Empowering students with industry-relevant computational thinking, modern software engineering stacks, and algorithmic problem-solving across specialized undergraduate and postgraduate degree programs.
+                </p>
+
+                <div style={{ marginTop: 'auto', borderTop: '1px solid var(--color-border)', paddingTop: 16, display: 'flex', flexDirection: 'column', gap: 10 }}>
+                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10, fontSize: 13, color: 'var(--color-text)' }}>
+                    <CheckCircle2 size={16} color="#16A34A" style={{ flexShrink: 0, marginTop: 2 }} />
+                    <span><strong>MCA (2 Years):</strong> Advanced Full-Stack Systems, Cloud Computing, AI/ML, and Enterprise Architecture</span>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10, fontSize: 13, color: 'var(--color-text)' }}>
+                    <CheckCircle2 size={16} color="#16A34A" style={{ flexShrink: 0, marginTop: 2 }} />
+                    <span><strong>BCA (3 Years):</strong> Foundations in Software Engineering, Web Technologies, Database Systems, and DSA</span>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 13, color: 'var(--color-text)' }}>
+                    <CheckCircle2 size={16} color="#16A34A" style={{ flexShrink: 0 }} />
+                    <span>Modern computing labs with high-speed internet & cloud sandboxes</span>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 13, color: 'var(--color-text)' }}>
+                    <CheckCircle2 size={16} color="#16A34A" style={{ flexShrink: 0 }} />
+                    <span>Mock coding interviews, hackathons, and corporate internships</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Card 3: The IT Club & Innovation Chapter */}
+              <div
+                className="card card-hover"
+                style={{
+                  background: 'var(--color-surface)',
+                  borderRadius: 18,
+                  padding: 32,
+                  border: '1.5px solid rgba(56, 189, 248, 0.4)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  boxShadow: '0 8px 24px rgba(16, 39, 67, 0.08)',
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
+                  <span
+                    style={{
+                      fontSize: 11,
+                      fontWeight: 800,
+                      background: 'linear-gradient(135deg, #0284C7 0%, #2563EB 100%)',
+                      color: '#ffffff',
+                      padding: '4px 10px',
+                      borderRadius: 6,
+                      letterSpacing: '0.04em',
+                    }}
+                  >
+                    OFFICIAL STUDENT TECH SOCIETY
+                  </span>
+                  <div style={{ width: 36, height: 36, borderRadius: 10, background: 'rgba(37, 99, 235, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#2563EB' }}>
+                    <Code2 size={20} />
+                  </div>
+                </div>
+
+                <h4 style={{ fontSize: 20, fontWeight: 800, color: 'var(--color-primary-navy)', marginBottom: 12 }}>
+                  The MITCOM IT Club
+                </h4>
+                <p style={{ fontSize: 14, color: 'var(--color-text-secondary)', lineHeight: 1.7, marginBottom: 20 }}>
+                  The premier student-led technical chapter uniting BCA and MCA engineers. We turn theoretical computer science into production software, publish faculty-guided research, and launch startups through Crieya incubation.
+                </p>
+
+                <div style={{ marginTop: 'auto', borderTop: '1px solid var(--color-border)', paddingTop: 16, display: 'flex', flexDirection: 'column', gap: 10 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 13, color: 'var(--color-text)' }}>
+                    <CheckCircle2 size={16} color="#2563EB" style={{ flexShrink: 0 }} />
+                    <span>Bi-weekly hackathons, coding sprints, and debugging contests</span>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 13, color: 'var(--color-text)' }}>
+                    <CheckCircle2 size={16} color="#2563EB" style={{ flexShrink: 0 }} />
+                    <span>Direct pathway into Crieya Pre-Incubation at MIT-ADT</span>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 13, color: 'var(--color-text)' }}>
+                    <CheckCircle2 size={16} color="#2563EB" style={{ flexShrink: 0 }} />
+                    <span>Faculty mentorship on research papers and software patents</span>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 13, color: 'var(--color-text)' }}>
+                    <CheckCircle2 size={16} color="#2563EB" style={{ flexShrink: 0 }} />
+                    <span>Real-world campus automation & open-source software deployments</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Quick 4-Fact MIT-ADT Strip */}
+            <div
+              style={{
+                marginTop: 36,
+                padding: '20px 24px',
+                borderRadius: 14,
+                background: 'linear-gradient(135deg, rgba(16, 39, 67, 0.03) 0%, rgba(56, 189, 248, 0.06) 100%)',
+                border: '1px solid rgba(56, 189, 248, 0.2)',
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+                gap: 20,
+              }}
+            >
+              <div>
+                <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--color-text-secondary)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                  Institutional Heritage
+                </div>
+                <div style={{ fontSize: 14, fontWeight: 800, color: 'var(--color-primary-navy)', marginTop: 2 }}>
+                  MIT-ADT University, Pune
+                </div>
+                <div style={{ fontSize: 12, color: 'var(--color-text-secondary)', marginTop: 2 }}>
+                  UGC recognized multidisciplinary world-class campus
+                </div>
+              </div>
+
+              <div>
+                <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--color-text-secondary)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                  Campus Location
+                </div>
+                <div style={{ fontSize: 14, fontWeight: 800, color: 'var(--color-primary-navy)', marginTop: 2 }}>
+                  Rajbaug, Loni Kalbhor
+                </div>
+                <div style={{ fontSize: 12, color: 'var(--color-text-secondary)', marginTop: 2 }}>
+                  Scenic 125-acre riverside educational complex
+                </div>
+              </div>
+
+              <div>
+                <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--color-text-secondary)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                  Pedagogical Focus
+                </div>
+                <div style={{ fontSize: 14, fontWeight: 800, color: 'var(--color-primary-navy)', marginTop: 2 }}>
+                  Practice-Based Learning
+                </div>
+                <div style={{ fontSize: 12, color: 'var(--color-text-secondary)', marginTop: 2 }}>
+                  Live projects, case studies, and corporate conclaves
+                </div>
+              </div>
+
+              <div>
+                <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--color-text-secondary)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                  Innovation Ecosystem
+                </div>
+                <div style={{ fontSize: 14, fontWeight: 800, color: 'var(--color-primary-navy)', marginTop: 2 }}>
+                  Crieya Incubation Centre
+                </div>
+                <div style={{ fontSize: 12, color: 'var(--color-text-secondary)', marginTop: 2 }}>
+                  Venture acceleration and patent filing guidance
+                </div>
+              </div>
             </div>
           </div>
         </div>
