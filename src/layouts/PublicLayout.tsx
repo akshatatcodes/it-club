@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { Menu, X, Code2, Sparkles } from 'lucide-react';
-import { PrimaryButton } from '../components/ui/Button';
-import { useDemoRole } from '../hooks/useAppContext';
-import { getInitials } from '../utils';
+
 
 const navLinks = [
   { href: '/', label: 'Home' },
@@ -13,73 +11,13 @@ const navLinks = [
   { href: '/events', label: 'Events' },
   { href: '/incubation', label: 'Incubation' },
   { href: '/workflow', label: 'Workflow' },
-  { href: '/demo', label: 'Explore Platform', isPill: true },
 ];
 
 export function PublicLayout({ children }: { children: React.ReactNode }) {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const { currentRole, currentUser } = useDemoRole();
-
-  const dashboardPath =
-    currentRole === 'student'
-      ? '/student/dashboard'
-      : currentRole === 'faculty'
-      ? '/faculty/dashboard'
-      : '/admin/dashboard';
 
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-      {/* Top University Context Bar */}
-      <div
-        style={{
-          background: 'var(--color-primary-navy)',
-          color: 'rgba(255,255,255,0.85)',
-          fontSize: 12,
-          padding: '6px 24px',
-          borderBottom: '1px solid rgba(255,255,255,0.08)',
-        }}
-      >
-        <div
-          style={{
-            maxWidth: 1240,
-            margin: '0 auto',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            flexWrap: 'wrap',
-            gap: 8,
-          }}
-        >
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <span style={{ fontWeight: 700, color: '#fff', letterSpacing: '0.04em' }}>
-              MIT-ADT UNIVERSITY
-            </span>
-            <span style={{ opacity: 0.4 }}>|</span>
-            <span style={{ opacity: 0.9 }}>Rajbaug Campus, Loni Kalbhor, Pune</span>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-            <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, color: '#93C5FD' }}>
-              <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#60A5FA' }} />
-              Active Innovation Session · 2026
-            </span>
-            <Link
-              to="/demo"
-              style={{
-                color: 'rgba(255,255,255,0.9)',
-                textDecoration: 'none',
-                fontWeight: 600,
-                fontSize: 11,
-                border: '1px solid rgba(255,255,255,0.25)',
-                padding: '2px 8px',
-                borderRadius: 4,
-              }}
-            >
-              Demo Mode
-            </Link>
-          </div>
-        </div>
-      </div>
-
       {/* Main Header */}
       <header className="public-header">
         <div
@@ -87,7 +25,7 @@ export function PublicLayout({ children }: { children: React.ReactNode }) {
             maxWidth: 1240,
             margin: '0 auto',
             padding: '0 24px',
-            height: 70,
+            height: 72,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
@@ -107,49 +45,35 @@ export function PublicLayout({ children }: { children: React.ReactNode }) {
           >
             <div
               style={{
-                width: 40,
-                height: 40,
-                borderRadius: 10,
-                background: 'linear-gradient(135deg, #102743 0%, #17365D 100%)',
-                border: '1px solid #1E4678',
+                width: 44,
+                height: 44,
+                borderRadius: 12,
+                background: 'linear-gradient(135deg, #0a192f 0%, #17365D 100%)',
+                border: '1.5px solid rgba(56, 189, 248, 0.4)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                color: '#fff',
-                boxShadow: '0 2px 8px rgba(16, 39, 67, 0.2)',
+                color: '#38BDF8',
+                boxShadow: '0 4px 12px rgba(16, 39, 67, 0.25), 0 0 16px rgba(56, 189, 248, 0.15)',
               }}
             >
-              <Code2 size={22} />
+              <Code2 size={24} />
             </div>
             <div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                <span
-                  style={{
-                    fontWeight: 800,
-                    fontSize: 16,
-                    color: 'var(--color-primary-navy)',
-                    letterSpacing: '-0.02em',
-                    lineHeight: 1.1,
-                  }}
-                >
-                  IT CLUB
-                </span>
-                <span
-                  style={{
-                    fontSize: 10,
-                    fontWeight: 700,
-                    background: 'var(--color-accent-light)',
-                    color: 'var(--color-accent)',
-                    padding: '1px 6px',
-                    borderRadius: 4,
-                    letterSpacing: '0.04em',
-                  }}
-                >
-                  HUB
-                </span>
-              </div>
-              <span style={{ fontSize: 11, color: 'var(--color-text-secondary)', fontWeight: 500 }}>
-                MIT-ADT University · Innovation Initiative
+              <span
+                style={{
+                  fontWeight: 800,
+                  fontSize: 18,
+                  color: 'var(--color-primary-navy)',
+                  letterSpacing: '-0.02em',
+                  lineHeight: 1.1,
+                  display: 'block',
+                }}
+              >
+                IT CLUB
+              </span>
+              <span className="header-brand-subtitle" style={{ fontSize: 11, color: 'var(--color-text-secondary)', fontWeight: 600, display: 'block', marginTop: 2 }}>
+                MIT College of Management and Computer Application
               </span>
             </div>
           </Link>
@@ -192,21 +116,13 @@ export function PublicLayout({ children }: { children: React.ReactNode }) {
                   to={link.href}
                   end={link.href === '/'}
                   style={({ isActive }) => ({
-                    padding: link.isPill ? '6px 14px' : '7px 14px',
-                    borderRadius: link.isPill ? 99 : 8,
+                    padding: '7px 14px',
+                    borderRadius: 8,
                     fontSize: 14,
-                    fontWeight: isActive || link.isPill ? 600 : 500,
-                    color: link.isPill
-                      ? 'var(--color-accent)'
-                      : isActive
-                      ? 'var(--color-primary-navy)'
-                      : 'var(--color-text)',
-                    background: link.isPill
-                      ? 'var(--color-accent-light)'
-                      : isActive
-                      ? 'rgba(16, 39, 67, 0.06)'
-                      : 'transparent',
-                    border: link.isPill ? '1px solid #CDE2F6' : '1px solid transparent',
+                    fontWeight: isActive ? 600 : 500,
+                    color: isActive ? 'var(--color-primary-navy)' : 'var(--color-text)',
+                    background: isActive ? 'rgba(16, 39, 67, 0.06)' : 'transparent',
+                    border: '1px solid transparent',
                     textDecoration: 'none',
                     transition: 'all 0.15s ease',
                   })}
@@ -217,47 +133,8 @@ export function PublicLayout({ children }: { children: React.ReactNode }) {
             })}
           </nav>
 
-          {/* Actions & Role Switcher */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
-            <Link to="/demo" style={{ textDecoration: 'none' }}>
-              <button
-                className="btn btn-secondary btn-sm"
-                style={{
-                  gap: 6,
-                  padding: '7px 14px',
-                  fontWeight: 600,
-                  fontSize: 13,
-                  borderColor: 'var(--color-border)',
-                }}
-              >
-                <Sparkles size={14} color="var(--color-accent)" />
-                <span>Explore Roles</span>
-              </button>
-            </Link>
-
-            <Link to={dashboardPath} style={{ textDecoration: 'none' }}>
-              <PrimaryButton size="sm" style={{ gap: 8, padding: '7px 16px', fontSize: 13 }}>
-                <span
-                  style={{
-                    width: 20,
-                    height: 20,
-                    borderRadius: '50%',
-                    background: 'rgba(255,255,255,0.25)',
-                    color: '#fff',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: 10,
-                    fontWeight: 700,
-                  }}
-                >
-                  {getInitials(currentUser.name)}
-                </span>
-                Dashboard
-              </PrimaryButton>
-            </Link>
-
-            {/* Mobile menu toggle */}
+          {/* Mobile menu toggle */}
+          <div className="mobile-menu-wrapper" style={{ display: 'flex', alignItems: 'center' }}>
             <button
               className="btn btn-ghost btn-sm mobile-menu-btn"
               onClick={() => setMobileOpen((p) => !p)}
@@ -276,11 +153,12 @@ export function PublicLayout({ children }: { children: React.ReactNode }) {
             aria-label="Mobile navigation"
             style={{
               borderTop: '1px solid var(--color-border)',
-              padding: '14px 24px 20px',
+              padding: '16px 20px 24px',
               display: 'flex',
               flexDirection: 'column',
-              gap: 6,
+              gap: 8,
               background: 'var(--color-surface)',
+              boxShadow: '0 12px 24px rgba(0,0,0,0.08)',
             }}
           >
             {navLinks.map((link) => (
@@ -290,7 +168,7 @@ export function PublicLayout({ children }: { children: React.ReactNode }) {
                 end={link.href === '/'}
                 onClick={() => setMobileOpen(false)}
                 style={({ isActive }) => ({
-                  padding: '10px 14px',
+                  padding: '11px 16px',
                   borderRadius: 8,
                   fontSize: 15,
                   fontWeight: isActive ? 600 : 500,
@@ -302,6 +180,28 @@ export function PublicLayout({ children }: { children: React.ReactNode }) {
                 {link.label}
               </NavLink>
             ))}
+
+            <div style={{ marginTop: 8, paddingTop: 12, borderTop: '1px solid var(--color-border)', display: 'flex', flexDirection: 'column', gap: 8 }}>
+              <Link
+                to="/demo"
+                onClick={() => setMobileOpen(false)}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 8,
+                  padding: '10px 14px',
+                  borderRadius: 8,
+                  background: 'var(--color-accent-light)',
+                  color: 'var(--color-accent)',
+                  fontWeight: 600,
+                  fontSize: 14,
+                  textDecoration: 'none',
+                }}
+              >
+                <Sparkles size={16} />
+                <span>Switch Demo Roles (Student / Faculty / Admin)</span>
+              </Link>
+            </div>
           </nav>
         )}
       </header>
@@ -332,43 +232,44 @@ export function PublicLayout({ children }: { children: React.ReactNode }) {
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
               <div
                 style={{
-                  width: 36,
-                  height: 36,
-                  borderRadius: 9,
-                  background: 'rgba(255,255,255,0.15)',
+                  width: 38,
+                  height: 38,
+                  borderRadius: 10,
+                  background: 'linear-gradient(135deg, rgba(56, 189, 248, 0.25) 0%, rgba(37, 99, 235, 0.3) 100%)',
+                  border: '1px solid rgba(56, 189, 248, 0.4)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}
               >
-                <Code2 size={20} color="#fff" />
+                <Code2 size={22} color="#38BDF8" />
               </div>
               <div>
                 <span style={{ fontWeight: 800, color: '#fff', fontSize: 16, display: 'block' }}>
-                  IT Club & Innovation Hub
+                  IT CLUB
                 </span>
-                <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.6)' }}>
-                  MIT-ADT University, Pune
+                <span style={{ fontSize: 11, color: '#93C5FD', fontWeight: 600 }}>
+                  MIT College of Management and Computer Application
                 </span>
               </div>
             </div>
-            <p style={{ fontSize: 13, lineHeight: 1.65, color: 'rgba(255,255,255,0.72)', marginBottom: 16 }}>
-              A collaborative student and faculty community fostering project-based learning, research,
-              technical mentorship, and pre-incubation pathways at Rajbaug campus.
+            <p style={{ fontSize: 13, lineHeight: 1.65, color: 'rgba(255,255,255,0.76)', marginBottom: 16 }}>
+              The official tech club of the <strong>Department of Computer Applications (MCA & BCA)</strong> at <strong>MIT College of Management (MITCOM)</strong>, MIT-ADT University. Fostering software engineering, hackathons, and pre-incubation.
             </p>
             <div
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: 6,
-                padding: '4px 10px',
-                background: 'rgba(255,255,255,0.08)',
+                padding: '4px 12px',
+                background: 'rgba(56, 189, 248, 0.12)',
+                border: '1px solid rgba(56, 189, 248, 0.25)',
                 borderRadius: 6,
                 fontSize: 12,
                 color: '#93C5FD',
               }}
             >
-              <span>🏛️ Rajbaug Campus · 125+ Acres</span>
+              <span>🏛️ MIT-ADT University · Rajbaug Campus</span>
             </div>
           </div>
 
@@ -423,16 +324,17 @@ export function PublicLayout({ children }: { children: React.ReactNode }) {
           {/* Campus Location */}
           <div>
             <p style={{ fontWeight: 700, color: '#fff', marginBottom: 14, fontSize: 14, letterSpacing: '0.02em' }}>
-              Campus Information
+              Campus & Department
             </p>
-            <p style={{ fontSize: 13, lineHeight: 1.7, color: 'rgba(255,255,255,0.75)', marginBottom: 12 }}>
-              <strong>MIT Art, Design and Technology University</strong><br />
-              Vishwarajbaug, Pune-Solapur Highway,<br />
-              Loni Kalbhor, Pune, Maharashtra 412201
+            <p style={{ fontSize: 13, lineHeight: 1.7, color: 'rgba(255,255,255,0.85)', marginBottom: 12 }}>
+              <strong>MIT College of Management (MITCOM)</strong><br />
+              <span style={{ color: '#93C5FD' }}>Department of Computer Applications</span><br />
+              MIT Art, Design and Technology University<br />
+              Rajbaug, Loni Kalbhor, Pune, Maharashtra 412201
             </p>
-            <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)', lineHeight: 1.5 }}>
-              IT Club Innovation Lab · Computing & Engineering Complex<br />
-              Weekly Student-Faculty Sprints: Wednesdays & Fridays
+            <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.65)', lineHeight: 1.5 }}>
+              MITCOM Innovation Lab · Computer Applications Block<br />
+              MCA & BCA Student Sprints · Weekly Coding Labs
             </p>
           </div>
         </div>
@@ -450,22 +352,26 @@ export function PublicLayout({ children }: { children: React.ReactNode }) {
             flexWrap: 'wrap',
             gap: 12,
             fontSize: 12,
-            color: 'rgba(255,255,255,0.6)',
+            color: 'rgba(255,255,255,0.65)',
           }}
         >
           <span>
-            © 2026 IT Club & Innovation Hub · MIT-ADT University Rajbaug Campus. Developed for College Presentation.
+            © 2026 MITCOM IT Club & Innovation Hub · MIT College of Management, Dept. of Computer Applications, MIT-ADT University.
           </span>
-          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
-            <span>🎓 Visual Prototype & Innovation Showcase</span>
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, color: '#93C5FD' }}>
+            <span>🎓 Official IT Club Portal · MITCOM</span>
           </span>
         </div>
       </footer>
 
       <style>{`
-        @media (max-width: 860px) {
+        @media (max-width: 1040px) {
           .desktop-nav { display: none !important; }
           .mobile-menu-btn { display: flex !important; }
+        }
+        @media (max-width: 680px) {
+          .btn-explore-roles { display: none !important; }
+          .header-brand-subtitle { display: none !important; }
         }
         .nav-link-hover:hover {
           background: rgba(16, 39, 67, 0.05);

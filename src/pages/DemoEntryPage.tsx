@@ -23,7 +23,7 @@ const roleOptions: RoleOption[] = [
     role: 'student',
     name: 'Akshat Jain',
     title: 'Student Innovator & Tech Lead',
-    department: 'Information Technology · Year 3',
+    department: 'Dept. of Computer Applications (MCA) · MITCOM',
     description: 'Explore projects, submit ideas, connect with teammates, and manage learning activities.',
     buttonLabel: 'Explore as Student',
     icon: <GraduationCap size={28} />,
@@ -40,7 +40,7 @@ const roleOptions: RoleOption[] = [
     role: 'faculty',
     name: 'Dr. Rahul Satyakam',
     title: 'Associate Professor & Faculty Mentor',
-    department: 'School of Computing, MIT-ADT University',
+    department: 'Dept. of Computer Applications, MITCOM · MIT-ADT University',
     description: 'Explore how faculty can review student ideas, guide project teams, and monitor progress.',
     buttonLabel: 'Explore as Faculty',
     icon: <UserCircle2 size={28} />,
@@ -57,7 +57,7 @@ const roleOptions: RoleOption[] = [
     role: 'admin',
     name: 'Aarav Mehta',
     title: 'Club Coordinator & Platform Admin',
-    department: 'IT Club Administration, MIT-ADT University',
+    department: 'MITCOM IT Club Administration, MIT-ADT University',
     description: 'Explore member management, club activities, illustrative analytics, and announcements.',
     buttonLabel: 'Explore as Admin',
     icon: <Shield size={28} />,
@@ -108,20 +108,21 @@ export function DemoEntryPage() {
                 width: 36,
                 height: 36,
                 borderRadius: 9,
-                background: 'rgba(255,255,255,0.15)',
+                background: 'linear-gradient(135deg, rgba(56, 189, 248, 0.25) 0%, rgba(37, 99, 235, 0.3) 100%)',
+                border: '1px solid rgba(56, 189, 248, 0.4)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
               }}
             >
-              <Code2 size={20} color="#fff" />
+              <Code2 size={20} color="#38BDF8" />
             </div>
             <div>
               <span style={{ fontWeight: 800, color: '#fff', fontSize: 15, display: 'block' }}>
-                IT Club & Innovation Hub
+                MITCOM IT Club & Innovation Hub
               </span>
-              <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.65)' }}>
-                MIT-ADT University · Rajbaug Campus
+              <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.75)' }}>
+                MIT College of Management · MIT-ADT University
               </span>
             </div>
           </Link>
